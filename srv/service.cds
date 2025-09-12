@@ -4,5 +4,4 @@ service BusinessService @(path: 'business') {
     entity Employee as projection on my.Employee;
     entity BusinessTrip as projection on my.BusinessTrip;
     entity Booking as projection on my.Booking;
-    entity Attachment  as projection on my.Attachment;
 }
