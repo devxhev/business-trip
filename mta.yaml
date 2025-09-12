@@ -24,7 +24,15 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      []
+      - name: business-trip-auth
 
 resources:
-  []
+  - name: business-trip-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: business-trip-${org}-${space}
+        tenant-mode: dedicated

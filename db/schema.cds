@@ -4,32 +4,27 @@ namespace at.clouddna;
 entity Employee : cuid, managed {
     name: String;
     email: String;
-    createdAt: type of managed:createdAt;
-    createdBy: type of managed:createdBy;
-    modifiedBy: type of managed:modifiedBy;
-    modifiedAt: type of managed:modifiedAt;
 }
 entity BusinessTrip : cuid, managed, temporal {
-    employeeID : Association to many Employee;
+    employee : Association to Employee;
     startDate: Date @assert.notNull;
     endDate: Date @assert.notNull;
     destination: String @assert.notNull;
     meansOfTransport: MeansOfTransport @assert.notNull;
     status: Association to Status;
-    comments: Composition of many {
-        message: String;
-        createdAt: type of managed:createdAt;
-        createdBy: type of managed:createdBy;
-        modifiedAt: type of managed:modifiedAt;
-        modifiedBy: type of managed:modifiedBy;
-    };
+    comments: Composition of many Comment on comments.businessTrip = $self;
     hotel: String;
     attachments: Composition of many Attachment on attachments.businessTrip = $self;
 }
 
 entity Flight : cuid {
-    businessTrip : Association to many BusinessTrip;
+    businessTrip : Association to BusinessTrip;
     flightRoute: Association to one FlightRoute;
+}
+
+entity Comment : cuid, managed {
+    businessTrip : Association to BusinessTrip;
+    message      : String;
 }
 
 entity FlightRoute : cuid{
@@ -40,18 +35,15 @@ entity FlightRoute : cuid{
     arrivalTime: Time;
 }
 entity Booking : cuid {
-    businessTripID : Association to BusinessTrip;
-    employeeID : Association to Employee;
+    businessTrip : Association to BusinessTrip;
+    employee : Association to Employee;
     bookingNumber: Integer;
     status: Association to Status;
 }
 entity Attachment : cuid, managed {
     businessTrip : Association to BusinessTrip;
-    image: LargeBinary @Core.MediaType: imageType @Core.ContentDisposition.FileName: fileName;
+    image: LargeBinary @Core.MediaType: imageType;
     imageType: String @Core.IsMediaType;
-    fileName: String;
-    createdBy: type of managed:createdBy;
-    createdAt: type of managed:createdAt;
 
 }
 

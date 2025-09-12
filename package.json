@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^9",
+    "@sap/xssec": "^4",
     "express": "^4"
   },
   "engines": {
@@ -27,5 +28,12 @@
   ],
   "sapux": [
     "app/employee"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
+  }
 }
