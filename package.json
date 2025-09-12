@@ -14,9 +14,17 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
-    "@cap-js/cds-types": "^0.13.0"
+    "@cap-js/cds-types": "^0.13.0",
+    "cds-plugin-ui5": "^0.13.0"
   },
   "scripts": {
-    "start": "cds-serve"
-  }
+    "start": "cds-serve",
+    "watch-employee": "cds watch --open at.clouddna.employee/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/employee"
+  ]
 }
