@@ -1,14 +1,10 @@
 {
-  "xsappname": "com.example.dienstreiseverwaltung",
+  "xsappname": "at.clouddna.business-trip",
   "tenant-mode": "shared",
   "scopes": [
     {
       "name": "$XSAPPNAME.dienstreise.create",
       "description": "Dienstreise anlegen (Mitarbeiter)"
-    },
-    {
-      "name": "$XSAPPNAME.dienstreise.read.own",
-      "description": "Dienstreisen des eigenen Benutzers einsehen"
     },
     {
       "name": "$XSAPPNAME.dienstreise.read.all",
@@ -61,7 +57,7 @@
       "description": "Angestellter: kann eigene Dienstreisen anlegen, bearbeiten (sofern nicht bestätigt), kommentieren und Attachments hochladen.",
       "scope-references": [
         "$XSAPPNAME.dienstreise.create",
-        "$XSAPPNAME.dienstreise.read.own",
+        "$XSAPPNAME.dienstreise.read.all",
         "$XSAPPNAME.dienstreise.update.own",
         "$XSAPPNAME.dienstreise.comment",
         "$XSAPPNAME.attachments.manage"
