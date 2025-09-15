@@ -59,7 +59,7 @@
       "description": "Audit-Felder / Logs lesen"
     }
   ],
-  "roles": [
+  "role-templates": [
     {
       "name": "Mitarbeiter",
       "description": "Angestellter: kann eigene Dienstreisen anlegen, bearbeiten (sofern nicht bestätigt), kommentieren und Attachments hochladen.",

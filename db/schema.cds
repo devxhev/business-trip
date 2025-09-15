@@ -60,7 +60,7 @@ entity FlightRoute : cuid {
 entity Booking : cuid {
     businessTrip  : Association to BusinessTrip;
     employee      : Association to Employee;
-    bookingNumber : Integer;
+    bookingNumber : String  @mandatory  @assert.unique;
     status        : Association to Status;
 }
 
