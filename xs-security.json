@@ -1,5 +1,98 @@
 {
-  "scopes": [],
-  "attributes": [],
-  "role-templates": []
+  "xsappname": "com.example.dienstreiseverwaltung",
+  "tenant-mode": "shared",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.dienstreise.create",
+      "description": "Dienstreise anlegen (Mitarbeiter)"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.read.own",
+      "description": "Dienstreisen des eigenen Benutzers einsehen"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.read.all",
+      "description": "Alle Dienstreisen einsehen (BackoDice, Admin)"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.update.own",
+      "description": "Eigene Dienstreise bearbeiten (sofern nicht bestätigt)"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.update.any",
+      "description": "Dienstreise bearbeiten (BackoDice/Admin)"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.comment",
+      "description": "Kommentare zu Dienstreisen hinzufügen"
+    },
+    {
+      "name": "$XSAPPNAME.booking.create",
+      "description": "Flug- und Hotelbuchungen durchführen (BackoDice)"
+    },
+    {
+      "name": "$XSAPPNAME.booking.code.write",
+      "description": "Buchungscodes hinterlegen (BackoDice)"
+    },
+    {
+      "name": "$XSAPPNAME.status.change",
+      "description": "Status einer Dienstreise ändern (z. B. gebucht, storniert)"
+    },
+    {
+      "name": "$XSAPPNAME.attachments.manage",
+      "description": "Attachments hochladen / verwalten"
+    },
+    {
+      "name": "$XSAPPNAME.customizing.manage",
+      "description": "Globales Customizing pflegen (Flight routes, Airlines, Destinationen) (Admin)"
+    },
+    {
+      "name": "$XSAPPNAME.user.manage",
+      "description": "Benutzer und Rollen verwalten (Admin)"
+    },
+    {
+      "name": "$XSAPPNAME.audit.read",
+      "description": "Audit-Felder / Logs lesen"
+    }
+  ],
+  "roles": [
+    {
+      "name": "Mitarbeiter",
+      "description": "Angestellter: kann eigene Dienstreisen anlegen, bearbeiten (sofern nicht bestätigt), kommentieren und Attachments hochladen.",
+      "scope-references": [
+        "$XSAPPNAME.dienstreise.create",
+        "$XSAPPNAME.dienstreise.read.own",
+        "$XSAPPNAME.dienstreise.update.own",
+        "$XSAPPNAME.dienstreise.comment",
+        "$XSAPPNAME.attachments.manage"
+      ]
+    },
+    {
+      "name": "Backoffice",
+      "description": "Backoffice-Mitarbeiter: Einsicht und Verwaltung aller Dienstreisen; Buchungen durchführen; Buchungscodes hinterlegen; Status ändern; Kommentare.",
+      "scope-references": [
+        "$XSAPPNAME.dienstreise.read.all",
+        "$XSAPPNAME.dienstreise.update.any",
+        "$XSAPPNAME.dienstreise.comment",
+        "$XSAPPNAME.booking.create",
+        "$XSAPPNAME.booking.code.write",
+        "$XSAPPNAME.status.change",
+        "$XSAPPNAME.attachments.manage"
+      ]
+    },
+    {
+      "name": "Administrator",
+      "description": "Admin: Vollzugriff auf alle Dienstreisen, Pflege globaler Stammdaten, Benutzer- und Rollenverwaltung sowie Audit-Zugriff.",
+      "scope-references": [
+        "$XSAPPNAME.dienstreise.read.all",
+        "$XSAPPNAME.dienstreise.update.any",
+        "$XSAPPNAME.customizing.manage",
+        "$XSAPPNAME.user.manage",
+        "$XSAPPNAME.audit.read",
+        "$XSAPPNAME.attachments.manage",
+        "$XSAPPNAME.status.change"
+      ]
+    }
+  ],
+  "attributes": []
 }

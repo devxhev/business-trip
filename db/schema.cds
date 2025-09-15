@@ -1,4 +1,4 @@
-using {cuid, managed, temporal} from '@sap/cds/common';
+using {cuid, managed, temporal, Country} from '@sap/cds/common';
 
 namespace at.clouddna;
 entity Employee : cuid, managed {
@@ -6,33 +6,39 @@ entity Employee : cuid, managed {
     email: String;
 }
 entity BusinessTrip : cuid, managed, temporal {
-    employee : Association to Employee;
-    startDate: Date @assert.notNull;
-    endDate: Date @assert.notNull;
-    destination: String @assert.notNull;
-    meansOfTransport: MeansOfTransport @assert.notNull;
+    employee : Association to Employee @mandatory;
+    startDate: Date @mandatory;
+    endDate: Date @mandatory;
+    destination: String @mandatory;
+    meansOfTransport: MeansOfTransport @mandatory;
     status: Association to Status;
     comments: Composition of many Comment on comments.businessTrip = $self;
-    hotel: String;
+    hotel: Association to Hotel;
     attachments: Composition of many Attachment on attachments.businessTrip = $self;
+}
+entity Hotel : cuid, managed {
+    name: String @mandatory;
+    address: String @mandatory;
+    city: String @mandatory;
+    country: Country;
 }
 
 entity Flight : cuid {
     businessTrip : Association to BusinessTrip;
-    flightRoute: Association to one FlightRoute;
+    flightRoute: Association to one FlightRoute @assert.notNull;
 }
 
 entity Comment : cuid, managed {
-    businessTrip : Association to BusinessTrip;
-    message      : String;
+    businessTrip : Association to BusinessTrip @assert.notNull;
+    message      : String @mandatory;
 }
 
 entity FlightRoute : cuid{
-    departureLocation : String;
-    arrivalLocation : String;
-    flightNumber : String(20);
-    departureTime: Time;
-    arrivalTime: Time;
+    departureLocation : String @mandatory;
+    arrivalLocation : String @mandatory;
+    flightNumber : String(20) @mandatory;
+    departureTime: Time @mandatory;
+    arrivalTime: Time @mandatory;
 }
 entity Booking : cuid {
     businessTrip : Association to BusinessTrip;
