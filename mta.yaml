@@ -25,6 +25,12 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: business-trip-auth
+  - name: business-trip-app
+    type: approuter.nodejs
+    path: approuter
+    requires:
+      - name: business-trip-srv
+      - name: business-trip-xsuaa
 
 resources:
   - name: business-trip-auth
@@ -36,3 +42,52 @@ resources:
       config:
         xsappname: business-trip-${org}-${space}
         tenant-mode: dedicated
+        role-collections:
+          - name: "dienstreise.read.own (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.read.own"
+          - name: "Mitarbeiter (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.Mitarbeiter"
+          - name: "dienstreise.read.all (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.read.all"
+          - name: "Backoffice (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.Backoffice"
+          - name: "Administrator (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.Administrator"
+          - name: "dienstreise.create (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.create"
+          - name: "dienstreise.update.own (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.update.own"
+          - name: "dienstreise.update.any (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.update.any"
+          - name: "dienstreise.comment (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.dienstreise.comment"
+          - name: "attachments.manage (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.attachments.manage"
+          - name: "flightroute.read (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.flightroute.read"
+          - name: "flightroute.manage (business-trip ${org}-${space})"
+            description: "generated"
+            role-template-references:
+              - "$XSAPPNAME.flightroute.manage"

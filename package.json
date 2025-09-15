@@ -8,7 +8,8 @@
   "dependencies": {
     "@sap/cds": "^9",
     "@sap/xssec": "^4",
-    "express": "^4"
+    "express": "^4",
+    "sqlite": "^5.1.1"
   },
   "engines": {
     "node": ">=20"
@@ -27,6 +28,7 @@
     "app/*"
   ],
   "sapux": [
+    "app/employee",
     "app/employee"
   ],
   "cds": {

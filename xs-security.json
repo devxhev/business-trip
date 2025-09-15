@@ -57,6 +57,22 @@
     {
       "name": "$XSAPPNAME.audit.read",
       "description": "Audit-Felder / Logs lesen"
+    },
+    {
+      "name": "$XSAPPNAME.dienstreise.read.own",
+      "description": "dienstreise.read.own"
+    },
+    {
+      "name": "$XSAPPNAME.Mitarbeiter",
+      "description": "Mitarbeiter"
+    },
+    {
+      "name": "$XSAPPNAME.Backoffice",
+      "description": "Backoffice"
+    },
+    {
+      "name": "$XSAPPNAME.Administrator",
+      "description": "Administrator"
     }
   ],
   "role-templates": [
