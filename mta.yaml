@@ -25,12 +25,6 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: business-trip-auth
-  - name: business-trip-app
-    type: approuter.nodejs
-    path: approuter
-    requires:
-      - name: business-trip-srv
-      - name: business-trip-xsuaa
 
 resources:
   - name: business-trip-auth
