@@ -8,7 +8,7 @@
     },
     {
       "name": "$XSAPPNAME.dienstreise.read.all",
-      "description": "Alle Dienstreisen einsehen (BackoDice, Admin)"
+      "description": "Alle Dienstreisen einsehen (Backoffice, Admin)"
     },
     {
       "name": "$XSAPPNAME.dienstreise.update.own",
@@ -16,19 +16,27 @@
     },
     {
       "name": "$XSAPPNAME.dienstreise.update.any",
-      "description": "Dienstreise bearbeiten (BackoDice/Admin)"
+      "description": "Dienstreise bearbeiten (Backoffice/Admin)"
     },
     {
       "name": "$XSAPPNAME.dienstreise.comment",
       "description": "Kommentare zu Dienstreisen hinzufügen"
     },
     {
+      "name": "$XSAPPNAME.flightroute.read",
+      "description": "Flugrouten einsehen (Admin)"
+    },
+    {
+      "name": "$XSAPPNAME.flightroute.manage",
+      "description": "Flugrouten verwalten (Admin)"
+    },
+    {
       "name": "$XSAPPNAME.booking.create",
-      "description": "Flug- und Hotelbuchungen durchführen (BackoDice)"
+      "description": "Flug- und Hotelbuchungen durchführen (Backoffice)"
     },
     {
       "name": "$XSAPPNAME.booking.code.write",
-      "description": "Buchungscodes hinterlegen (BackoDice)"
+      "description": "Buchungscodes hinterlegen (Backoffice)"
     },
     {
       "name": "$XSAPPNAME.status.change",
@@ -86,7 +94,9 @@
         "$XSAPPNAME.user.manage",
         "$XSAPPNAME.audit.read",
         "$XSAPPNAME.attachments.manage",
-        "$XSAPPNAME.status.change"
+        "$XSAPPNAME.status.change",
+        "$XSAPPNAME.flightroute.read",
+        "$XSAPPNAME.flightroute.manage"
       ]
     }
   ],
