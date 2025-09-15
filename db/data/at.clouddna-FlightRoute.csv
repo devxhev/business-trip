@@ -1,1 +1,6 @@
 ID,departureLocation,arrivalLocation,flightNumber,departureTime,arrivalTime
+1,Frankfurt,Berlin,FR123,08:00:00,09:30:00
+2,Munich,Hamburg,MH456,10:00:00,11:45:00
+3,Berlin,Cologne,BC789,14:00:00,15:30:00
+4,Stuttgart,Dusseldorf,SD101,16:00:00,17:20:00
+5,Hamburg,Frankfurt,HF202,18:00:00,19:30:00

@@ -35,6 +35,11 @@
     "requires": {
       "[production]": {
         "auth": "xsuaa"
+      },
+      "[development]": {
+        "auth": {
+          "kind": "dummy"
+        }
       }
     }
   }

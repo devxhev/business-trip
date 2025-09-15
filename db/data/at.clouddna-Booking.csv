@@ -1,1 +1,4 @@
 ID,businessTripID_ID,employeeID_ID,bookingNumber,status_ID
+1,1,1,1001,1
+2,2,2,1002,2
+3,3,3,1003,3

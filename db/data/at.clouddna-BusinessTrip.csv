@@ -1,1 +1,4 @@
 ID,startDate,endDate,destination,meansOfTransport,status_ID,hotel,createdAt,createdBy,modifiedAt,modifiedBy,validFrom,validTo
+1,2023-10-01,2023-10-05,Berlin,Zug,1,Hotel Berlin,2023-09-01T10:00:00Z,user1,2023-09-02T12:00:00Z,user2,2023-09-01,2023-12-31
+2,2023-11-10,2023-11-15,Hamburg,Flug,2,Hotel Hamburg,2023-10-01T11:00:00Z,user3,2023-10-02T13:00:00Z,user4,2023-10-01,2023-12-31
+3,2023-12-01,2023-12-03,Cologne,Auto,3,Hotel Cologne,2023-11-01T09:00:00Z,user5,2023-11-02T10:00:00Z,user6,2023-11-01,2023-12-31
