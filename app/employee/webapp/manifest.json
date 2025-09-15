@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.18.6",
-      "toolsId": "19f407f6-b667-4f28-a4e0-97243afbdfd2"
+      "toolsId": "045bbf07-6ad3-4e61-911b-16b8b01bc98c"
     },
     "dataSources": {
       "mainService": {
@@ -85,28 +85,28 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "EmployeeList",
-          "target": "EmployeeList"
+          "name": "BusinessTripList",
+          "target": "BusinessTripList"
         },
         {
-          "pattern": "Employee({key}):?query:",
-          "name": "EmployeeObjectPage",
-          "target": "EmployeeObjectPage"
+          "pattern": "BusinessTrip({key}):?query:",
+          "name": "BusinessTripObjectPage",
+          "target": "BusinessTripObjectPage"
         }
       ],
       "targets": {
-        "EmployeeList": {
+        "BusinessTripList": {
           "type": "Component",
-          "id": "EmployeeList",
+          "id": "BusinessTripList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Employee",
+              "contextPath": "/BusinessTrip",
               "variantManagement": "Page",
               "navigation": {
-                "Employee": {
+                "BusinessTrip": {
                   "detail": {
-                    "route": "EmployeeObjectPage"
+                    "route": "BusinessTripObjectPage"
                   }
                 }
               },
@@ -116,19 +116,18 @@
                     "type": "ResponsiveTable"
                   }
                 }
-              },
-              "initialLoad": "Enabled"
+              }
             }
           }
         },
-        "EmployeeObjectPage": {
+        "BusinessTripObjectPage": {
           "type": "Component",
-          "id": "EmployeeObjectPage",
+          "id": "BusinessTripObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Employee"
+              "contextPath": "/BusinessTrip"
             }
           }
         }

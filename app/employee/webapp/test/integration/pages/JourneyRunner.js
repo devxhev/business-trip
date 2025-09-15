@@ -1,15 +1,15 @@
 sap.ui.define([
     "sap/fe/test/JourneyRunner",
-	"at/clouddna/employee/test/integration/pages/EmployeeList",
-	"at/clouddna/employee/test/integration/pages/EmployeeObjectPage"
-], function (JourneyRunner, EmployeeList, EmployeeObjectPage) {
+	"at/clouddna/employee/test/integration/pages/BusinessTripList",
+	"at/clouddna/employee/test/integration/pages/BusinessTripObjectPage"
+], function (JourneyRunner, BusinessTripList, BusinessTripObjectPage) {
     'use strict';
 
     var runner = new JourneyRunner({
         launchUrl: sap.ui.require.toUrl('at/clouddna/employee') + '/index.html',
         pages: {
-			onTheEmployeeList: EmployeeList,
-			onTheEmployeeObjectPage: EmployeeObjectPage
+			onTheBusinessTripList: BusinessTripList,
+			onTheBusinessTripObjectPage: BusinessTripObjectPage
         },
         async: true
     });
