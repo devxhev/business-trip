@@ -25,6 +25,20 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: business-trip-auth
+      - name: business-trip-postgres
+
+  - name: business-trip-postgres-deployer
+    type: nodejs
+    path: gen/pg
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      tasks:
+        - name: deploy-to-postgresql
+          command: npm start
+    requires:
+      - name: business-trip-postgres
 
 resources:
   - name: business-trip-auth
@@ -85,3 +99,8 @@ resources:
             description: "generated"
             role-template-references:
               - "$XSAPPNAME.flightroute.manage"
+  - name: business-trip-postgres
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: postgresql-db
+      service-plan: trial

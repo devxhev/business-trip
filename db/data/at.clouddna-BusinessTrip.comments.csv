@@ -1,4 +1,0 @@
-up__ID,message,createdAt,createdBy,modifiedAt,modifiedBy
-c1a2b3c4-1d2e-4f5a-8b6c-7d8e9f0a1b2c,Meeting with client was successful,2023-10-02T10:00:00Z,user1,2023-10-02T12:00:00Z,user2
-d2e3f4a5-2b3c-5d6e-9f0a-1b2c3d4e5f6a,Hotel booking confirmed,2023-11-11T11:00:00Z,user3,2023-11-11T13:00:00Z,user4
-e3f4a5b6-3c4d-6e7f-0a1b-2c3d4e5f6a7b,Car rental arranged,2023-12-02T09:00:00Z,user5,2023-12-02T10:00:00Z,user6

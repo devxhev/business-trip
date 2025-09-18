@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Mon Sep 15 2025 09:57:03 GMT+0200 (Mitteleuropäische Sommerzeit)|
+|**Generation Date and Time**<br>Tue Sep 16 2025 09:16:04 GMT+0200 (Mitteleuropäische Sommerzeit)|
 |**App Generator**<br>SAP Fiori Application Generator|
 |**App Generator Version**<br>1.18.6|
 |**Generation Platform**<br>Visual Studio Code|

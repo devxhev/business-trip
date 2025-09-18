@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.18.6",
-      "toolsId": "045bbf07-6ad3-4e61-911b-16b8b01bc98c"
+      "toolsId": "25ec3d48-ee35-4ac0-99ef-cebed29fd61c"
     },
     "dataSources": {
       "mainService": {
@@ -43,7 +43,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.140.0",
       "libs": {
@@ -90,8 +90,8 @@
         },
         {
           "pattern": "BusinessTrip({key}):?query:",
-          "name": "BusinessTripObjectPage",
-          "target": "BusinessTripObjectPage"
+          "name": "EmpBusinessObjectPage",
+          "target": "EmpBusinessObjectPage"
         }
       ],
       "targets": {
@@ -106,7 +106,7 @@
               "navigation": {
                 "BusinessTrip": {
                   "detail": {
-                    "route": "BusinessTripObjectPage"
+                    "route": "EmpBusinessObjectPage"
                   }
                 }
               },
@@ -116,21 +116,17 @@
                     "type": "ResponsiveTable"
                   }
                 }
-              },
-              "initialLoad": "Enabled"
+              }
             }
           }
         },
-        "BusinessTripObjectPage": {
+        "EmpBusinessObjectPage": {
+          "name": "EmpBusinessObjectPage",
+          "viewName": "at.clouddna.employee.view.EmpBusinessObjectPage",
           "type": "Component",
-          "id": "BusinessTripObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/BusinessTrip"
-            }
-          }
+          "viewType": "XML",
+          "id": "EmpBusinessObjectPage",
+          "viewId": "EmpBusinessObjectPage"
         }
       }
     }

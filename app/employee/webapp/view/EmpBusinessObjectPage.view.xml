@@ -1,0 +1,145 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:m="sap.m"
+    xmlns:sample="at.clouddna.employee"
+    controllerName="at.clouddna.employee.controller.EmpBusinessObjectPage"
+>
+    <ObjectPageLayout
+        id="EmpBusinessObjectPage"
+        upperCaseAnchorBar="false"
+    >
+        <headerTitle>
+            <ObjectPageHeader objectTitle="{destination}" />
+        </headerTitle>
+        <headerContent />
+
+        <sections>
+            <ObjectPageSection
+                titleUppercase="false"
+                id="primaryData"
+                title="{i18n>coreInformation}"
+            >
+                <subSections>
+                    <ObjectPageSubSection id="coreinformation">
+                        <f:SimpleForm
+                            xmlns:f="sap.ui.layout.form"
+                            editable="false"
+                            layout="ResponsiveGridLayout"
+                            labelSpanL="3"
+                            labelSpanM="3"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            columnsL="1"
+                            columnsM="1"
+                            adjustLabelSpan="false"
+                            singleContainerFullSize="false"
+                        >
+                            <f:content>
+                                <m:Label
+                                    labelFor="empname"
+                                    text="{i18n>emp.employeename}"
+                                />
+                                <m:Text
+                                    id="empname"
+                                    text="{path: 'employee/name'}"
+                                />
+                                <m:Label
+                                    labelFor="startDate"
+                                    text="{i18n>emp.startDate}"
+                                />
+                                <m:Text text="{path: 'startDate'}" />
+                                <m:Label
+                                    labelFor="endDate"
+                                    text="{i18n>emp.endDate}"
+                                />
+                                <m:Text text="{path: 'endDate'}" />
+                                <m:Label
+                                    labelFor="destination"
+                                    text="{i18n>emp.destination}"
+                                />
+                                <m:Text text="{path: 'destination'}" />
+                                <m:Label
+                                    labelFor="meansOfTransport"
+                                    text="{i18n>emp.meansOfTransport}"
+                                />
+                                <m:Text text="{path: 'meansOfTransport'}" />
+                                <m:Label
+                                    labelFor="status"
+                                    text="{i18n>emp.status}"
+                                />
+                                <m:Text text="{path: 'status/name'}" />
+                                <m:Label
+                                    labelFor="hotel"
+                                    text="{i18n>emp.hotel}"
+                                />
+                                <m:Text text="{path: 'hotel'}" />
+                            </f:content>
+                        </f:SimpleForm>
+                    </ObjectPageSubSection>
+                </subSections>
+                <ObjectPageSubSection title="{i18n>additionalcomments}">
+                    <f:SimpleForm
+                        xmlns:f="sap.ui.layout.form"
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                        adjustLabelSpan="false"
+                        singleContainerFullSize="false"
+                    >
+                        <m:List items="{path: 'comments'}">
+                            <m:items>
+                                <m:StandardListItem title="{message}" />
+                            </m:items>
+                        </m:List>
+                    </f:SimpleForm>
+                </ObjectPageSubSection>
+                <ObjectPageSubSection title="{i18n>flightinformation}" />
+
+                <ObjectPageSubSection title="{i18n>attachments}">
+                    <m:List items="{path: 'attachments'}">
+                        <m:CustomListItem>
+                            <m:HBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                                class="sapUiSmallMargin"
+                            >
+                                <m:VBox>
+                                    <m:Text
+                                        text="{name}"
+                                        class="sapMH4FontSize"
+                                    />
+                                    <m:Text
+                                        text="{description}"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <m:Text
+                                        text="{
+                        path: 'size',
+                        formatter: '.formatter.formatFileSize'
+                    }"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                </m:VBox>
+                                <m:Link
+                                    text="{i18n>download}"
+                                    target="_blank"
+                                    href="{url}"
+                                    emphasized="true"
+                                />
+                            </m:HBox>
+                        </m:CustomListItem>
+                    </m:List>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

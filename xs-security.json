@@ -104,6 +104,7 @@
       "name": "Administrator",
       "description": "Admin: Vollzugriff auf alle Dienstreisen, Pflege globaler Stammdaten, Benutzer- und Rollenverwaltung sowie Audit-Zugriff.",
       "scope-references": [
+        "$XSAPPNAME.dienstreise.read.own",
         "$XSAPPNAME.dienstreise.read.all",
         "$XSAPPNAME.dienstreise.update.any",
         "$XSAPPNAME.customizing.manage",

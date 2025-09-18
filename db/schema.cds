@@ -1,8 +1,7 @@
 using {
     cuid,
     managed,
-    temporal,
-    Country
+    temporal
 } from '@sap/cds/common';
 
 namespace at.clouddna;
@@ -27,16 +26,9 @@ entity BusinessTrip : cuid, managed, temporal {
     status           : Association to Status;
     comments         : Composition of many Comment
                            on comments.businessTrip = $self;
-    hotel            : Association to Hotel;
+    hotel            : Boolean;
     attachments      : Composition of many Attachment
                            on attachments.businessTrip = $self;
-}
-
-entity Hotel : cuid, managed {
-    name    : String @mandatory;
-    address : String @mandatory;
-    city    : String @mandatory;
-    country : Country;
 }
 
 entity Flight : cuid {
@@ -66,24 +58,24 @@ entity Booking : cuid {
 
 entity Attachment : cuid, managed {
     businessTrip : Association to BusinessTrip;
-    image        : LargeBinary @Core.MediaType: imageType;
-    imageType    : String      @Core.IsMediaType;
 
+    @Core.MediaType: mediaType
+    content      : LargeBinary;
+
+    @Core.IsMediaType
+    mediaType    : String;
+    fileName     : String;
+    size         : Integer;
+    description  : String;
 }
 
 entity Status : cuid, temporal {
     name        : String;
-    description : localized String;
+    description : String;
 }
 
 type MeansOfTransport : String enum {
     Auto;
     Zug;
     Flug;
-}
-
-entity StatusTransition : cuid {
-    fromStatus : Association to Status;
-    toStatus   : Association to Status;
-    allowed    : Boolean;
 }

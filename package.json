@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js/postgres": "^2.0.5",
     "@sap/cds": "^9",
     "@sap/xssec": "^4",
     "express": "^4",
@@ -28,15 +29,24 @@
     "app/*"
   ],
   "sapux": [
-    "app/employee",
     "app/employee"
   ],
   "cds": {
     "requires": {
       "[production]": {
+        "db": {
+          "kind": "postgres",
+          "impl": "@cap-js/postgres"
+        },
         "auth": "xsuaa"
       },
       "[development]": {
+        "db": {
+          "kind": "sqlite",
+          "model": [
+            "db/schema"
+          ]
+        },
         "auth": {
           "kind": "dummy"
         }
