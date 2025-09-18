@@ -29,6 +29,8 @@ entity BusinessTrip : cuid, managed, temporal {
     hotel            : Boolean;
     attachments      : Composition of many Attachment
                            on attachments.businessTrip = $self;
+    flights          : Composition of many Flight
+                           on flights.businessTrip = $self;
 }
 
 entity Flight : cuid {

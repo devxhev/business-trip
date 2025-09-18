@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:unified="sap.ui.unified"
     xmlns:form="sap.ui.layout.form"
     height="100%"
     xmlns:mvc="sap.ui.core.mvc"
@@ -13,8 +14,18 @@
         upperCaseAnchorBar="false"
     >
         <headerTitle>
-            <ObjectPageHeader objectTitle="{destination}" />
+            <ObjectPageHeader objectTitle="{destination}">
+                <ObjectPageHeaderContent>
+                    <content>
+                        <m:ObjectStatus
+                            text="{i18n>emp.status}: {status/name}"
+                            state="{path: 'status/name', formatter:'.formatStatusState'}"
+                        />
+                    </content>
+                </ObjectPageHeaderContent>
+            </ObjectPageHeader>
         </headerTitle>
+
         <headerContent />
 
         <sections>
@@ -68,11 +79,6 @@
                                 />
                                 <m:Text text="{path: 'meansOfTransport'}" />
                                 <m:Label
-                                    labelFor="status"
-                                    text="{i18n>emp.status}"
-                                />
-                                <m:Text text="{path: 'status/name'}" />
-                                <m:Label
                                     labelFor="hotel"
                                     text="{i18n>emp.hotel}"
                                 />
@@ -102,8 +108,51 @@
                         </m:List>
                     </f:SimpleForm>
                 </ObjectPageSubSection>
-                <ObjectPageSubSection title="{i18n>flightinformation}" />
+                <ObjectPageSubSection
+                    title="{i18n>flightinformation}"
+                    visible="{= %{flights}.length > 0 }"
+                >
+                    <m:List items="{path: 'flights'}">
+                        <m:CustomListItem>
+                            <f:SimpleForm
+                                xmlns:f="sap.ui.layout.form"
+                                editable="false"
+                                layout="ResponsiveGridLayout"
+                                labelSpanL="3"
+                                labelSpanM="3"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                columnsL="1"
+                                columnsM="1"
+                            >
+                                <f:content>
+                                    <m:Label text="{i18n>flight.number}" />
+                                    <m:Text text="{flightRoute/flightNumber}" />
 
+                                    <m:Label text="{i18n>flight.departure}" />
+                                    <m:Text
+                                        text="{flightRoute/departureLocation}"
+                                    />
+
+                                    <m:Label
+                                        text="{i18n>flight.departureTime}"
+                                    />
+                                    <m:Text
+                                        text="{flightRoute/departureTime}"
+                                    />
+
+                                    <m:Label text="{i18n>flight.arrival}" />
+                                    <m:Text
+                                        text="{flightRoute/arrivalLocation}"
+                                    />
+
+                                    <m:Label text="{i18n>flight.arrivalTime}" />
+                                    <m:Text text="{flightRoute/arrivalTime}" />
+                                </f:content>
+                            </f:SimpleForm>
+                        </m:CustomListItem>
+                    </m:List>
+                </ObjectPageSubSection>
                 <ObjectPageSubSection title="{i18n>attachments}">
                     <m:List items="{path: 'attachments'}">
                         <m:CustomListItem>
@@ -114,7 +163,7 @@
                             >
                                 <m:VBox>
                                     <m:Text
-                                        text="{name}"
+                                        text="{fileName}"
                                         class="sapMH4FontSize"
                                     />
                                     <m:Text
@@ -124,7 +173,7 @@
                                     <m:Text
                                         text="{
                         path: 'size',
-                        formatter: '.formatter.formatFileSize'
+                        formatter: '.formatFileSize'
                     }"
                                         class="sapUiTinyMarginTop"
                                     />
@@ -132,7 +181,7 @@
                                 <m:Link
                                     text="{i18n>download}"
                                     target="_blank"
-                                    href="{url}"
+                                    href="/business/Attachment('{ID}')/content"
                                     emphasized="true"
                                 />
                             </m:HBox>
