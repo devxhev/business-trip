@@ -86,7 +86,10 @@
         {
           "pattern": ":?query:",
           "name": "BusinessTripList",
-          "target": "BusinessTripList"
+          "target": "BusinessTripList",
+          "parameters": {
+            "expand": "attachments,comments,flights/flightRoute,employee,status"
+          }
         },
         {
           "pattern": "BusinessTrip({key}):?query:",

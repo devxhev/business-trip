@@ -27,10 +27,12 @@ entity BusinessTrip : cuid, managed, temporal {
     comments         : Composition of many Comment
                            on comments.businessTrip = $self;
     hotel            : Boolean;
+    booking          : Association to one Booking;
     attachments      : Composition of many Attachment
                            on attachments.businessTrip = $self;
     flights          : Composition of many Flight
                            on flights.businessTrip = $self;
+
 }
 
 entity Flight : cuid {
@@ -52,8 +54,6 @@ entity FlightRoute : cuid {
 }
 
 entity Booking : cuid {
-    businessTrip  : Association to BusinessTrip;
-    employee      : Association to Employee;
     bookingNumber : String  @mandatory  @assert.unique;
     status        : Association to Status;
 }
@@ -61,7 +61,7 @@ entity Booking : cuid {
 entity Attachment : cuid, managed {
     businessTrip : Association to BusinessTrip;
 
-    @Core.MediaType: mediaType
+    @Core.MediaType: mediaType  @mandatory  @Core.ContentDisposition: fileName
     content      : LargeBinary;
 
     @Core.IsMediaType

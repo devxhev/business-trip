@@ -153,6 +153,26 @@
                         </m:CustomListItem>
                     </m:List>
                 </ObjectPageSubSection>
+                <ObjectPageSubSection title="{i18n>bookinginformation}">
+                    <f:SimpleForm
+                        xmlns:f="sap.ui.layout.form"
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                        adjustLabelSpan="false"
+                        singleContainerFullSize="false"
+                    >
+                        <m:Label text="{i18n>bookingnumber}" />
+                        <m:Text text="{booking/bookingNumber}" />
+                        <m:Label text="{i18n>bookingStatus}" />
+                        <m:ObjectStatus text="{booking/status/name}" state="{path:'booking/status/name', formatter:'.formatStatusState'}" />
+                    </f:SimpleForm>
+                </ObjectPageSubSection>
                 <ObjectPageSubSection title="{i18n>attachments}">
                     <m:List items="{path: 'attachments'}">
                         <m:CustomListItem>
@@ -179,9 +199,9 @@
                                     />
                                 </m:VBox>
                                 <m:Link
-                                    text="{i18n>download}"
+                                    text="{i18n>show}"
                                     target="_blank"
-                                    href="/business/Attachment('{ID}')/content"
+                                    href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
                                     emphasized="true"
                                 />
                             </m:HBox>

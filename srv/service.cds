@@ -9,8 +9,8 @@ service BusinessService @(path: 'business') {
         to   : 'Mitarbeiter',
         where: 'employee_ID = $user'
     }]*/
-
-    entity BusinessTrip as projection on my.BusinessTrip;
+    @odata.draft.enabled
+    entity BusinessTrip  as projection on my.BusinessTrip;
 
     /*@requires              : 'dienstreise.read.all'
     @restrict              : [{
@@ -51,27 +51,29 @@ service BusinessService @(path: 'business') {
     //entity UpdateAnyBusinessTrip as projection on my.BusinessTrip;
 
     //@requires: 'dienstreise.comment'
-    entity Comment      as projection on my.Comment;
+    entity Comment       as projection on my.Comment;
 
     //@requires: 'attachments.manage'
-    @odata.draft.enabled
-    entity Attachment   as
+    entity Attachment    as
         projection on my.Attachment {
-            *,
-            @Core.MediaType                  : mediaType
-            @Core.ContentDisposition.Filename: fileName
-            @odata.draft.enabled             : false
-            content
+            key ID,
+                businessTrip,
+                fileName,
+                description,
+                mediaType,
+                size,
+                content
         };
 
     //@requires: 'flightroute.read'
-    entity FlightRoute  as projection on my.FlightRoute;
+    entity FlightRoute   as projection on my.FlightRoute;
     //@requires: 'flightroute.manage'
     //@cds.redirection.target: 'FlightRoute'
     //entity ManageFlightRoute as projection on my.FlightRoute;
 
-    entity Employee     as projection on my.Employee;
-    entity Status       as projection on my.Status;
+    entity Employee      as projection on my.Employee;
+    entity Status        as projection on my.Status;
+    entity bookingNumber as projection on my.Booking;
 
 }
 

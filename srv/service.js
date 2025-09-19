@@ -1,4 +1,4 @@
-const cds = require("@sap/cds");
+/*const cds = require("@sap/cds");
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime-types");
@@ -114,4 +114,4 @@ class BusinessService extends cds.ApplicationService {
   }
 }
 
-module.exports = BusinessService;
+module.exports = BusinessService;*/
