@@ -36,6 +36,13 @@
       "tablet": "",
       "tablet@2": ""
     },
+    "resources": {
+      "css": [
+        {
+          "uri": "view/css/style.css"
+        }
+      ]
+    },
     "deviceTypes": {
       "desktop": true,
       "tablet": true,

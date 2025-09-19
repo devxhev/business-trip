@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:core="sap.ui.core"
     xmlns:unified="sap.ui.unified"
     xmlns:form="sap.ui.layout.form"
     height="100%"
@@ -87,27 +88,6 @@
                         </f:SimpleForm>
                     </ObjectPageSubSection>
                 </subSections>
-                <ObjectPageSubSection title="{i18n>additionalcomments}">
-                    <f:SimpleForm
-                        xmlns:f="sap.ui.layout.form"
-                        editable="false"
-                        layout="ResponsiveGridLayout"
-                        labelSpanL="3"
-                        labelSpanM="3"
-                        emptySpanL="0"
-                        emptySpanM="0"
-                        columnsL="1"
-                        columnsM="1"
-                        adjustLabelSpan="false"
-                        singleContainerFullSize="false"
-                    >
-                        <m:List items="{path: 'comments'}">
-                            <m:items>
-                                <m:StandardListItem title="{message}" />
-                            </m:items>
-                        </m:List>
-                    </f:SimpleForm>
-                </ObjectPageSubSection>
                 <ObjectPageSubSection
                     title="{i18n>flightinformation}"
                     visible="{= %{flights}.length > 0 }"
@@ -170,7 +150,10 @@
                         <m:Label text="{i18n>bookingnumber}" />
                         <m:Text text="{booking/bookingNumber}" />
                         <m:Label text="{i18n>bookingStatus}" />
-                        <m:ObjectStatus text="{booking/status/name}" state="{path:'booking/status/name', formatter:'.formatStatusState'}" />
+                        <m:ObjectStatus
+                            text="{booking/status/name}"
+                            state="{path:'booking/status/name', formatter:'.formatStatusState'}"
+                        />
                     </f:SimpleForm>
                 </ObjectPageSubSection>
                 <ObjectPageSubSection title="{i18n>attachments}">
@@ -204,6 +187,65 @@
                                     href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
                                     emphasized="true"
                                 />
+                            </m:HBox>
+                        </m:CustomListItem>
+                    </m:List>
+                </ObjectPageSubSection>
+                <ObjectPageSubSection
+                    title="{i18n>additionalcomments}"
+                    id="commentsSection"
+                >
+                    <m:List
+                        items="{path:'comments'}"
+                        showSeparators="None"
+                        growing="false"
+                    >
+                        <m:CustomListItem class="commentItem">
+                            <m:HBox
+                                alignItems="Start"
+                                class="sapUiSmallMargin"
+                                justifyContent="Start"
+                            >
+                                <m:Avatar
+                                    displayShape="Circle"
+                                    backgroundColor="Accent6"
+                                    initials="{= ${createdBy} ? ${createdBy}.substring(0,2).toUpperCase() : 'U'}"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <m:VBox
+                                    width="100%"
+                                    class="sapUiSmallMarginBegin"
+                                >
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon
+                                            src="sap-icon://person-placeholder"
+                                        />
+                                        <m:Text text="{createdBy}" />
+                                    </m:HBox>
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon src="sap-icon://calendar" />
+                                        <m:Text
+                                            text="{ path:'createdAt', formatter:'.formatDateTime'}"
+                                            wrapping="false"
+                                            class="sapUiTinyMarginBottom sapUiSmallFontSize"
+                                        />
+                                    </m:HBox>
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon src="sap-icon://comment" />
+                                        <m:Text
+                                            text="{ path:'message', formatter:'.formatMessage'}"
+                                        />
+                                    </m:HBox>
+                                </m:VBox>
                             </m:HBox>
                         </m:CustomListItem>
                     </m:List>

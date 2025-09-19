@@ -30,17 +30,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
           return "Indication06";
         } else if (sStatus === "Abgeschlossen") {
           return "Success";
-        } else if (sStatus === "Abgelehnt") {
+        } else if (sStatus === "Storniert") {
           return "Error";
         } else {
           return "None";
         }
       },
       formatFileSize: function (size) {
-        if (!size) return "";
+        if (size === null || size === undefined) return "";
         if (size < 1024) return size + " B";
         if (size < 1024 * 1024) return Math.round(size / 1024) + " KB";
         return Math.round(size / (1024 * 1024)) + " MB";
+      },
+      formatDateTime: function (v) {
+        if (!v) return "";
+        try {
+          return new Date(v).toLocaleString();
+        } catch (e) {
+          return v;
+        }
+      },
+      formatMessage: function (m) {
+        if (!m) return "";
+        return m.replace(/\n/g, "<br/>");
       },
     }
   );
