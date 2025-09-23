@@ -126,7 +126,8 @@
                     "type": "ResponsiveTable"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
@@ -137,6 +138,15 @@
           "viewType": "XML",
           "id": "EmpBusinessObjectPage",
           "viewId": "EmpBusinessObjectPage"
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController#at.clouddna.employee::EmpBusinessObjectPage": {
+            "controllerName": "at.clouddna.employee.controller.EmpBusinessObjectPage"
+          }
         }
       }
     }

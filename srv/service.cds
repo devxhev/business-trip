@@ -126,33 +126,33 @@ annotate BusinessService.BusinessTrip with @(
     UI.LineItem           : [
         {
             $Type: 'UI.DataField',
-            Value: employee.name,
-            Label: 'Name'
+            Value: occasion,
+            Label: '{i18n>occasion}'
         },
         {
             $Type: 'UI.DataField',
             Value: destination,
-            Label: 'Destination'
+            Label: '{i18n>destination}'
         },
         {
             $Type: 'UI.DataField',
             Value: meansOfTransport,
-            Label: 'Means Of Transport'
+            Label: '{i18n>meansOfTransport}'
         },
         {
             $Type: 'UI.DataField',
             Value: hotel,
-            Label: 'Hotel'
+            Label: '{i18n>hotel}'
         },
         {
             $Type: 'UI.DataField',
             Value: status.description,
-            Label: 'Status'
+            Label: '{i18n>status}'
         },
         {
             $Type: 'UI.DataField',
             Value: comments.message,
-            Label: 'Additional Comments'
+            Label: '{i18n>additionalComments}'
         }
     ]
 );

@@ -12,17 +12,18 @@ entity Employee : cuid, managed {
 }
 
 entity BusinessTrip : cuid, managed, temporal {
-    employee         : Association to Employee @mandatory;
-    startDate        : Date                    @assert.range: [
+    employee         : Association to Employee      @mandatory;
+    occasion         : String                       @mandatory;
+    startDate        : Date                         @assert.range: [
         null,
         endDate
     ];
-    endDate          : Date                    @assert.range: [
+    endDate          : Date                         @assert.range: [
         startDate,
         null
     ];
-    destination      : String                  @mandatory;
-    meansOfTransport : MeansOfTransport        @mandatory;
+    destination      : String                       @mandatory;
+    meansOfTransport : MeansOfTransport             @mandatory;
     status           : Association to Status;
     comments         : Composition of many Comment
                            on comments.businessTrip = $self;
@@ -32,6 +33,8 @@ entity BusinessTrip : cuid, managed, temporal {
                            on attachments.businessTrip = $self;
     flights          : Composition of many Flight
                            on flights.businessTrip = $self;
+    validFrom        : type of temporal : validFrom @default     : $now;
+    validTo          : type of temporal : validTo   @default     : '9999-12-31';
 
 }
 

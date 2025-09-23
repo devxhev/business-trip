@@ -10,247 +10,73 @@
     xmlns:sample="at.clouddna.employee"
     controllerName="at.clouddna.employee.controller.EmpBusinessObjectPage"
 >
-    <ObjectPageLayout
+        <ObjectPageLayout
         id="EmpBusinessObjectPage"
-        upperCaseAnchorBar="false"
-    >
-        <headerTitle>
-            <ObjectPageHeader objectTitle="{destination}">
-                <ObjectPageHeaderContent>
-                    <content>
-                        <m:ObjectStatus
-                            text="{i18n>emp.status}: {status/name}"
-                            state="{path: 'status/name', formatter:'.formatStatusState'}"
-                        />
-                    </content>
-                </ObjectPageHeaderContent>
-            </ObjectPageHeader>
-        </headerTitle>
+            upperCaseAnchorBar="false"
+            showFooter="{= ${editModel>/editMode} }"
+        >
+        
+            <headerTitle>
+                <ObjectPageHeader objectTitle="{occasion}">
+                    <ObjectPageHeaderContent>
+                        <content>
+                            <layout:HorizontalLayout>
+                                <m:Toolbar style="Clear">
+                                    <m:Button
+                                        text="{i18n>back}"
+                                        press=".onNavBack"
+                                        type="Back"
+                                        visible="{= !${editModel>/editMode} }"
+                                    />
+                                    <m:Button
+                                        text="{i18n>emp.edit}"
+                                        press=".onEdit"
+                                        type="Emphasized"
+                                        icon="sap-icon://edit"
+                                        visible="{= !${editModel>/editMode} }"
+                                    />
+                                    <m:Button
+                                        text="{i18n>delete}"
+                                        press=".onDelete"
+                                        type="Reject"
+                                        icon="sap-icon://delete"
+                                        visible="{= !${editModel>/editMode} }"
+                                    />
+                                </m:Toolbar>
+                            </layout:HorizontalLayout>
+                            <m:ObjectStatus
+                                text="{i18n>emp.status}: {status/name}"
+                                state="{path: 'status/name', formatter:'.formatStatusState'}"
+                            />
+                        </content>
+                    </ObjectPageHeaderContent>
+                </ObjectPageHeader>
+            </headerTitle>
 
-        <headerContent />
+            <headerContent />
 
-        <sections>
-            <ObjectPageSection
-                titleUppercase="false"
-                id="primaryData"
-                title="{i18n>coreInformation}"
-            >
-                <subSections>
-                    <ObjectPageSubSection id="coreinformation">
-                        <f:SimpleForm
-                            xmlns:f="sap.ui.layout.form"
-                            editable="false"
-                            layout="ResponsiveGridLayout"
-                            labelSpanL="3"
-                            labelSpanM="3"
-                            emptySpanL="0"
-                            emptySpanM="0"
-                            columnsL="1"
-                            columnsM="1"
-                            adjustLabelSpan="false"
-                            singleContainerFullSize="false"
-                        >
-                            <f:content>
-                                <m:Label
-                                    labelFor="empname"
-                                    text="{i18n>emp.employeename}"
-                                />
-                                <m:Text
-                                    id="empname"
-                                    text="{path: 'employee/name'}"
-                                />
-                                <m:Label
-                                    labelFor="startDate"
-                                    text="{i18n>emp.startDate}"
-                                />
-                                <m:Text text="{path: 'startDate'}" />
-                                <m:Label
-                                    labelFor="endDate"
-                                    text="{i18n>emp.endDate}"
-                                />
-                                <m:Text text="{path: 'endDate'}" />
-                                <m:Label
-                                    labelFor="destination"
-                                    text="{i18n>emp.destination}"
-                                />
-                                <m:Text text="{path: 'destination'}" />
-                                <m:Label
-                                    labelFor="meansOfTransport"
-                                    text="{i18n>emp.meansOfTransport}"
-                                />
-                                <m:Text text="{path: 'meansOfTransport'}" />
-                                <m:Label
-                                    labelFor="hotel"
-                                    text="{i18n>emp.hotel}"
-                                />
-                                <m:Text text="{path: 'hotel'}" />
-                            </f:content>
-                        </f:SimpleForm>
-                    </ObjectPageSubSection>
-                </subSections>
-                <ObjectPageSubSection
-                    title="{i18n>flightinformation}"
-                    visible="{= %{flights}.length > 0 }"
-                >
-                    <m:List items="{path: 'flights'}">
-                        <m:CustomListItem>
-                            <f:SimpleForm
-                                xmlns:f="sap.ui.layout.form"
-                                editable="false"
-                                layout="ResponsiveGridLayout"
-                                labelSpanL="3"
-                                labelSpanM="3"
-                                emptySpanL="0"
-                                emptySpanM="0"
-                                columnsL="1"
-                                columnsM="1"
-                            >
-                                <f:content>
-                                    <m:Label text="{i18n>flight.number}" />
-                                    <m:Text text="{flightRoute/flightNumber}" />
+            <sections />
 
-                                    <m:Label text="{i18n>flight.departure}" />
-                                    <m:Text
-                                        text="{flightRoute/departureLocation}"
-                                    />
+            <footer>
+            <m:Toolbar>
+                <m:Button
+                    text="{i18n>save}"
+                    press=".onSave"
+                    type="Accept"
+                    icon="sap-icon://save"
+                    visible="{= ${editModel>/editMode} }"
+                />
+                <m:Button
+                    text="{i18n>cancel}"
+                    press=".onCancel"
+                    type="Neutral"
+                    icon="sap-icon://sys-cancel"
+                    visible="{= ${editModel>/editMode} }"
+                />
+            </m:Toolbar>
+        </footer>
+        </ObjectPageLayout>
 
-                                    <m:Label
-                                        text="{i18n>flight.departureTime}"
-                                    />
-                                    <m:Text
-                                        text="{flightRoute/departureTime}"
-                                    />
-
-                                    <m:Label text="{i18n>flight.arrival}" />
-                                    <m:Text
-                                        text="{flightRoute/arrivalLocation}"
-                                    />
-
-                                    <m:Label text="{i18n>flight.arrivalTime}" />
-                                    <m:Text text="{flightRoute/arrivalTime}" />
-                                </f:content>
-                            </f:SimpleForm>
-                        </m:CustomListItem>
-                    </m:List>
-                </ObjectPageSubSection>
-                <ObjectPageSubSection title="{i18n>bookinginformation}">
-                    <f:SimpleForm
-                        xmlns:f="sap.ui.layout.form"
-                        editable="false"
-                        layout="ResponsiveGridLayout"
-                        labelSpanL="3"
-                        labelSpanM="3"
-                        emptySpanL="0"
-                        emptySpanM="0"
-                        columnsL="1"
-                        columnsM="1"
-                        adjustLabelSpan="false"
-                        singleContainerFullSize="false"
-                    >
-                        <m:Label text="{i18n>bookingnumber}" />
-                        <m:Text text="{booking/bookingNumber}" />
-                        <m:Label text="{i18n>bookingStatus}" />
-                        <m:ObjectStatus
-                            text="{booking/status/name}"
-                            state="{path:'booking/status/name', formatter:'.formatStatusState'}"
-                        />
-                    </f:SimpleForm>
-                </ObjectPageSubSection>
-                <ObjectPageSubSection title="{i18n>attachments}">
-                    <m:List items="{path: 'attachments'}">
-                        <m:CustomListItem>
-                            <m:HBox
-                                justifyContent="SpaceBetween"
-                                alignItems="Center"
-                                class="sapUiSmallMargin"
-                            >
-                                <m:VBox>
-                                    <m:Text
-                                        text="{fileName}"
-                                        class="sapMH4FontSize"
-                                    />
-                                    <m:Text
-                                        text="{description}"
-                                        class="sapUiTinyMarginTop"
-                                    />
-                                    <m:Text
-                                        text="{
-                        path: 'size',
-                        formatter: '.formatFileSize'
-                    }"
-                                        class="sapUiTinyMarginTop"
-                                    />
-                                </m:VBox>
-                                <m:Link
-                                    text="{i18n>show}"
-                                    target="_blank"
-                                    href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
-                                    emphasized="true"
-                                />
-                            </m:HBox>
-                        </m:CustomListItem>
-                    </m:List>
-                </ObjectPageSubSection>
-                <ObjectPageSubSection
-                    title="{i18n>additionalcomments}"
-                    id="commentsSection"
-                >
-                    <m:List
-                        items="{path:'comments'}"
-                        showSeparators="None"
-                        growing="false"
-                    >
-                        <m:CustomListItem class="commentItem">
-                            <m:HBox
-                                alignItems="Start"
-                                class="sapUiSmallMargin"
-                                justifyContent="Start"
-                            >
-                                <m:Avatar
-                                    displayShape="Circle"
-                                    backgroundColor="Accent6"
-                                    initials="{= ${createdBy} ? ${createdBy}.substring(0,2).toUpperCase() : 'U'}"
-                                    class="sapUiTinyMarginEnd"
-                                />
-                                <m:VBox
-                                    width="100%"
-                                    class="sapUiSmallMarginBegin"
-                                >
-                                    <m:HBox
-                                        columnGap="1rem"
-                                        class="sapUiTinyMarginBottom"
-                                    >
-                                        <core:Icon
-                                            src="sap-icon://person-placeholder"
-                                        />
-                                        <m:Text text="{createdBy}" />
-                                    </m:HBox>
-                                    <m:HBox
-                                        columnGap="1rem"
-                                        class="sapUiTinyMarginBottom"
-                                    >
-                                        <core:Icon src="sap-icon://calendar" />
-                                        <m:Text
-                                            text="{ path:'createdAt', formatter:'.formatDateTime'}"
-                                            wrapping="false"
-                                            class="sapUiTinyMarginBottom sapUiSmallFontSize"
-                                        />
-                                    </m:HBox>
-                                    <m:HBox
-                                        columnGap="1rem"
-                                        class="sapUiTinyMarginBottom"
-                                    >
-                                        <core:Icon src="sap-icon://comment" />
-                                        <m:Text
-                                            text="{ path:'message', formatter:'.formatMessage'}"
-                                        />
-                                    </m:HBox>
-                                </m:VBox>
-                            </m:HBox>
-                        </m:CustomListItem>
-                    </m:List>
-                </ObjectPageSubSection>
-            </ObjectPageSection>
-        </sections>
-    </ObjectPageLayout>
+        
+        
 </mvc:View>
