@@ -15,12 +15,12 @@ entity BusinessTrip : cuid, managed, temporal {
     employee         : Association to Employee      @mandatory;
     occasion         : String                       @mandatory;
     startDate        : Date                         @assert.range: [
-        null,
-        endDate
+        '1900-01-01',
+        '9999-12-31'
     ];
     endDate          : Date                         @assert.range: [
-        startDate,
-        null
+        '1900-01-01',
+        '9999-12-31'
     ];
     destination      : String                       @mandatory;
     meansOfTransport : MeansOfTransport             @mandatory;
@@ -31,16 +31,15 @@ entity BusinessTrip : cuid, managed, temporal {
     booking          : Association to one Booking;
     attachments      : Composition of many Attachment
                            on attachments.businessTrip = $self;
-    flights          : Composition of many Flight
-                           on flights.businessTrip = $self;
+    flights          : Association to one Flight;
     validFrom        : type of temporal : validFrom @default     : $now;
     validTo          : type of temporal : validTo   @default     : '9999-12-31';
 
 }
 
 entity Flight : cuid {
-    businessTrip : Association to BusinessTrip;
-    flightRoute  : Association to one FlightRoute @assert.notNull;
+    outboundFlightRoute : Association to one FlightRoute @assert.notNull;
+    returnFlightRoute   : Association to one FlightRoute @assert.notNull;
 }
 
 entity Comment : cuid, managed {
@@ -48,12 +47,19 @@ entity Comment : cuid, managed {
     message      : String                      @mandatory;
 }
 
+entity Airports {
+    key iata    : String(3);
+        name    : String @mandatory;
+        city    : String @mandatory;
+        country : String @mandatory;
+}
+
 entity FlightRoute : cuid {
-    departureLocation : String      @mandatory;
-    arrivalLocation   : String      @mandatory;
-    flightNumber      : String(20)  @mandatory  @assert.unique;
-    departureTime     : Time        @mandatory;
-    arrivalTime       : Time        @mandatory;
+    departureLocation : Association to one Airports @mandatory;
+    arrivalLocation   : Association to one Airports @mandatory;
+    flightNumber      : String(20)                  @mandatory  @assert.unique;
+    departureTime     : Time                        @mandatory;
+    arrivalTime       : Time                        @mandatory;
 }
 
 entity Booking : cuid {

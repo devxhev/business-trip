@@ -56,7 +56,8 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.fe.templates": {}
+        "sap.fe.templates": {},
+        "sap.fe.core": {}
       }
     },
     "contentDensities": {
@@ -76,7 +77,12 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": true
+          "earlyRequests": true,
+          "groupProperties": {
+            "draftAction": {
+              "submit": "API"
+            }
+          }
         }
       },
       "@i18n": {
@@ -99,9 +105,9 @@
           }
         },
         {
-          "pattern": "BusinessTrip({key}):?query:",
-          "name": "EmpBusinessObjectPage",
-          "target": "EmpBusinessObjectPage"
+          "name": "BusinessTripEmpBusinessObjectPagePage",
+          "pattern": "BusinessTrip({BusinessTripKey}):?query:",
+          "target": "BusinessTripEmpBusinessObjectPagePage"
         }
       ],
       "targets": {
@@ -116,7 +122,7 @@
               "navigation": {
                 "BusinessTrip": {
                   "detail": {
-                    "route": "EmpBusinessObjectPage"
+                    "route": "BusinessTripEmpBusinessObjectPagePage"
                   }
                 }
               },
@@ -131,23 +137,23 @@
             }
           }
         },
-        "EmpBusinessObjectPage": {
-          "name": "EmpBusinessObjectPage",
-          "viewName": "at.clouddna.employee.view.EmpBusinessObjectPage",
+        "BusinessTripEmpBusinessObjectPagePage": {
           "type": "Component",
-          "viewType": "XML",
-          "id": "EmpBusinessObjectPage",
-          "viewId": "EmpBusinessObjectPage"
+          "id": "BusinessTripEmpBusinessObjectPagePage",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/BusinessTrip",
+              "viewName": "at.clouddna.employee.view.EmpBusinessObjectPage"
+            }
+          }
         }
       }
     },
     "extends": {
       "extensions": {
-        "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ObjectPage.ObjectPageController#at.clouddna.employee::EmpBusinessObjectPage": {
-            "controllerName": "at.clouddna.employee.controller.EmpBusinessObjectPage"
-          }
-        }
+        "sap.ui.controllerExtensions": {}
       }
     }
   },

@@ -9,8 +9,7 @@ service BusinessService @(path: 'business') {
         to   : 'Mitarbeiter',
         where: 'employee_ID = $user'
     }]*/
-    @odata.draft.enabled
-    entity BusinessTrip  as projection on my.BusinessTrip;
+    entity BusinessTrip as projection on my.BusinessTrip;
 
     /*@requires              : 'dienstreise.read.all'
     @restrict              : [{
@@ -51,10 +50,10 @@ service BusinessService @(path: 'business') {
     //entity UpdateAnyBusinessTrip as projection on my.BusinessTrip;
 
     //@requires: 'dienstreise.comment'
-    entity Comment       as projection on my.Comment;
+    entity Comment      as projection on my.Comment;
 
     //@requires: 'attachments.manage'
-    entity Attachment    as
+    entity Attachment   as
         projection on my.Attachment {
             key ID,
                 businessTrip,
@@ -66,18 +65,20 @@ service BusinessService @(path: 'business') {
         };
 
     //@requires: 'flightroute.read'
-    entity FlightRoute   as projection on my.FlightRoute;
+    entity FlightRoute  as projection on my.FlightRoute;
     //@requires: 'flightroute.manage'
     //@cds.redirection.target: 'FlightRoute'
     //entity ManageFlightRoute as projection on my.FlightRoute;
 
-    entity Employee      as projection on my.Employee;
-    entity Status        as projection on my.Status;
-    entity bookingNumber as projection on my.Booking;
+    entity Employee     as projection on my.Employee;
+    entity Status       as projection on my.Status;
+    entity Booking      as projection on my.Booking;
+    entity Airports     as projection on my.Airports;
+    entity Flight       as projection on my.Flight;
 
 }
 
-//annotate BusinessService.BusinessTrip with @odata.draft.enabled;
+annotate BusinessService.BusinessTrip with @odata.draft.enabled;
 
 annotate BusinessService.BusinessTrip with @(
     UI.FieldGroup #General: {

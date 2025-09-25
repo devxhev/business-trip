@@ -10,73 +10,80 @@
     xmlns:sample="at.clouddna.employee"
     controllerName="at.clouddna.employee.controller.EmpBusinessObjectPage"
 >
-        <ObjectPageLayout
+    <ObjectPageLayout
         id="EmpBusinessObjectPage"
-            upperCaseAnchorBar="false"
-            showFooter="{= ${editModel>/editMode} }"
-        >
-        
-            <headerTitle>
-                <ObjectPageHeader objectTitle="{occasion}">
-                    <ObjectPageHeaderContent>
-                        <content>
-                            <layout:HorizontalLayout>
-                                <m:Toolbar style="Clear">
-                                    <m:Button
-                                        text="{i18n>back}"
-                                        press=".onNavBack"
-                                        type="Back"
-                                        visible="{= !${editModel>/editMode} }"
-                                    />
-                                    <m:Button
-                                        text="{i18n>emp.edit}"
-                                        press=".onEdit"
-                                        type="Emphasized"
-                                        icon="sap-icon://edit"
-                                        visible="{= !${editModel>/editMode} }"
-                                    />
-                                    <m:Button
-                                        text="{i18n>delete}"
-                                        press=".onDelete"
-                                        type="Reject"
-                                        icon="sap-icon://delete"
-                                        visible="{= !${editModel>/editMode} }"
-                                    />
-                                </m:Toolbar>
-                            </layout:HorizontalLayout>
-                            <m:ObjectStatus
-                                text="{i18n>emp.status}: {status/name}"
-                                state="{path: 'status/name', formatter:'.formatStatusState'}"
-                            />
-                        </content>
-                    </ObjectPageHeaderContent>
-                </ObjectPageHeader>
-            </headerTitle>
+        upperCaseAnchorBar="false"
+        showFooter="{= ${editModel>/editMode} }"
+    >
+        <headerTitle>
+            <ObjectPageHeader objectTitle="{occasion}">
+                <ObjectPageHeaderContent>
+                    <content>
+                        <layout:HorizontalLayout>
+                            <m:Toolbar style="Clear">
+                                <m:VBox alignContent="End">
+                                    <m:HBox columnGap="0.5rem">
+                                        <m:Button
+                                            text="{i18n>back}"
+                                            press=".onNavBack"
+                                            type="Back"
+                                            visible="{= !${editModel>/editMode} }"
+                                        />
+                                        <m:Button
+                                            text="{i18n>emp.edit}"
+                                            press=".onEdit"
+                                            type="Emphasized"
+                                            icon="sap-icon://edit"
+                                            visible="{= !${editModel>/editMode} }"
+                                        />
+                                        <m:Button
+                                            text="{i18n>delete}"
+                                            press=".onDelete"
+                                            type="Reject"
+                                            icon="sap-icon://delete"
+                                            visible="{= !${editModel>/editMode} }"
+                                        />
+                                    </m:HBox>
+                                </m:VBox>
+                            </m:Toolbar>
+                        </layout:HorizontalLayout>
+                        <m:ObjectStatus
+                            text="{i18n>emp.status}: {status/name}"
+                            state="{path: 'status/name', formatter:'.formatStatusState'}"
+                        />
+                    </content>
+                </ObjectPageHeaderContent>
+            </ObjectPageHeader>
+        </headerTitle>
 
-            <headerContent />
+        <headerContent />
 
-            <sections />
+        <sections />
 
-            <footer>
+        <footer>
             <m:Toolbar>
-                <m:Button
-                    text="{i18n>save}"
-                    press=".onSave"
-                    type="Accept"
-                    icon="sap-icon://save"
-                    visible="{= ${editModel>/editMode} }"
-                />
-                <m:Button
-                    text="{i18n>cancel}"
-                    press=".onCancel"
-                    type="Neutral"
-                    icon="sap-icon://sys-cancel"
-                    visible="{= ${editModel>/editMode} }"
-                />
+                <m:FlexBox
+                    justifyContent="End"
+                    width="100%"
+                >
+                    <m:HBox columnGap="1rem">
+                        <m:Button
+                            text="{i18n>save}"
+                            press=".onSave"
+                            type="Accept"
+                            icon="sap-icon://save"
+                            visible="{= ${editModel>/editMode} }"
+                        />
+                        <m:Button
+                            text="{i18n>cancel}"
+                            press=".onCancel"
+                            type="Neutral"
+                            icon="sap-icon://sys-cancel"
+                            visible="{= ${editModel>/editMode} }"
+                        />
+                    </m:HBox>
+                </m:FlexBox>
             </m:Toolbar>
         </footer>
-        </ObjectPageLayout>
-
-        
-        
+    </ObjectPageLayout>
 </mvc:View>
