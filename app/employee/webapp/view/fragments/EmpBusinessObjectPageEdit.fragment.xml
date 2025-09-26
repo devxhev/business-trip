@@ -102,26 +102,27 @@
                     columnsM="1"
                 >
                     <f:content>
-                        <m:Label text="{i18n>flight.number}" />
-                        <m:Input
-                            value="{flights/outboundFlightRoute/flightNumber}"
-                        />
-                        <m:Label text="{i18n>flight.departure}" />
-                        <m:Input
-                            value="{flights/outboundFlightRoute/departureLocation/name} ({flights/outboundFlightRoute/departureLocation/iata})"
-                        />
-                        <m:Label text="{i18n>flight.departureTime}" />
-                        <m:Input
-                            value="{flights/outboundFlightRoute/departureTime}"
-                        />
-                        <m:Label text="{i18n>flight.arrival}" />
-                        <m:Input
-                            value="{flights/outboundFlightRoute/arrivalLocation/name} ({flights/outboundFlightRoute/arrivalLocation/iata})"
-                        />
-                        <m:Label text="{i18n>flight.arrivalTime}" />
-                        <m:Input
-                            value="{flights/outboundFlightRoute/arrivalTime}"
-                        />
+                        <!-- Route-Auswahl statt Einzel-Inputs -->
+                        <m:Label text="Route auswählen" />
+                        <m:Select
+                            width="100%"
+                            forceSelection="true"
+                            selectedKey="{flights/outboundFlightRoute_ID}"
+                            items="{ 
+                                path: '/FlightRoute',
+                                templateShareable: false,
+                                parameters: {
+                                    $$ownRequest: true,
+                                    $expand: 'departureLocation,arrivalLocation',
+                                    $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata'
+                                }
+                            }"
+                        >
+                            <core:Item
+                                key="{ID}"
+                                text="{= ${flightNumber} + '  ' + ${departureLocation/iata} + ' → ' + ${arrivalLocation/iata} + '  (' + ${departureTime} + '–' + ${arrivalTime} + ')' }"
+                            />
+                        </m:Select>
                     </f:content>
                 </f:SimpleForm>
             </ObjectPageSubSection>
@@ -140,26 +141,27 @@
                     columnsM="1"
                 >
                     <f:content>
-                        <m:Label text="{i18n>flight.number}" />
-                        <m:Input
-                            value="{flights/returnFlightRoute/flightNumber}"
-                        />
-                        <m:Label text="{i18n>flight.departure}" />
-                        <m:Input
-                            value="{flights/returnFlightRoute/departureLocation/name} ({flights/returnFlightRoute/departureLocation/iata})"
-                        />
-                        <m:Label text="{i18n>flight.departureTime}" />
-                        <m:Input
-                            value="{flights/returnFlightRoute/departureTime}"
-                        />
-                        <m:Label text="{i18n>flight.arrival}" />
-                        <m:Input
-                            value="{flights/returnFlightRoute/arrivalLocation/name} ({flights/returnFlightRoute/arrivalLocation/iata})"
-                        />
-                        <m:Label text="{i18n>flight.arrivalTime}" />
-                        <m:Input
-                            value="{flights/returnFlightRoute/arrivalTime}"
-                        />
+                        <!-- Route-Auswahl statt Einzel-Inputs -->
+                        <m:Label text="Route auswählen" />
+                        <m:Select
+                            width="100%"
+                            forceSelection="true"
+                            selectedKey="{flights/returnFlightRoute_ID}"
+                            items="{ 
+                                path: '/FlightRoute',
+                                templateShareable: false,
+                                parameters: {
+                                    $$ownRequest: true,
+                                    $expand: 'departureLocation,arrivalLocation',
+                                    $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata'
+                                }
+                            }"
+                        >
+                            <core:Item
+                                key="{ID}"
+                                text="{= ${flightNumber} + '  ' + ${departureLocation/iata} + ' → ' + ${arrivalLocation/iata} + '  (' + ${departureTime} + '–' + ${arrivalTime} + ')' }"
+                            />
+                        </m:Select>
                     </f:content>
                 </f:SimpleForm>
             </ObjectPageSubSection>

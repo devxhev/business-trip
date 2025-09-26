@@ -18,7 +18,28 @@ sap.ui.define(
           const oEditModel = new JSONModel({ editMode: false });
           this.getView().setModel(oEditModel, "editModel");
           this._showBusinessFragment("EmpBusinessObjectPageDisplay");
+
+          /* const router = this.getAppComponent().getRouter();
+          router
+            .getRoute("EmpBusinessObjectPage")
+            .attachPatternMatched(this._onPatternMatched, this); */
           PageController.prototype.onInit.apply(this, arguments);
+        },
+
+        _onPatternMatched: function (oEvent) {
+          /* setTimeout(() => {
+            const oContext = this.getView().getBindingContext();
+
+            if (!oContext) return;
+
+            const bIsActive = oContext.getProperty("IsActiveEntity");
+
+            if (bIsActive) {
+              this._setEditableState(false);
+            } else {
+              this._setEditableState(true);
+            }
+          }, 200); */
         },
 
         formatStatusState: function (sStatus) {
@@ -348,7 +369,7 @@ sap.ui.define(
             window.history.go(-1);
           } else {
             const oRouter = this.getAppComponent().getRouter();
-            oRouter.navTo("BusinessTripsList", {}, true);
+            oRouter.navTo("BusinessTripList", {}, true);
           }
         },
       }

@@ -11,19 +11,19 @@ entity Employee : cuid, managed {
     email : String;
 }
 
-entity BusinessTrip : cuid, managed, temporal {
-    employee         : Association to Employee      @mandatory;
-    occasion         : String                       @mandatory;
-    startDate        : Date                         @assert.range: [
+entity BusinessTrip : cuid, managed {
+    employee         : Association to Employee @mandatory;
+    occasion         : String                  @mandatory;
+    startDate        : Date                    @assert.range: [
         '1900-01-01',
         '9999-12-31'
     ];
-    endDate          : Date                         @assert.range: [
+    endDate          : Date                    @assert.range: [
         '1900-01-01',
         '9999-12-31'
     ];
-    destination      : String                       @mandatory;
-    meansOfTransport : MeansOfTransport             @mandatory;
+    destination      : String                  @mandatory;
+    meansOfTransport : MeansOfTransport        @mandatory;
     status           : Association to Status;
     comments         : Composition of many Comment
                            on comments.businessTrip = $self;
@@ -32,8 +32,6 @@ entity BusinessTrip : cuid, managed, temporal {
     attachments      : Composition of many Attachment
                            on attachments.businessTrip = $self;
     flights          : Association to one Flight;
-    validFrom        : type of temporal : validFrom @default     : $now;
-    validTo          : type of temporal : validTo   @default     : '9999-12-31';
 
 }
 
