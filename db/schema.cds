@@ -6,25 +6,19 @@ using {
 
 namespace at.clouddna;
 
-entity Employee : cuid, managed {
-    name  : String;
-    email : String;
-}
-
 entity BusinessTrip : cuid, managed {
-    employee         : Association to Employee @mandatory;
-    occasion         : String                  @mandatory;
-    startDate        : Date                    @assert.range: [
+    occasion         : String           @mandatory;
+    startDate        : Date             @assert.range: [
         '1900-01-01',
         '9999-12-31'
     ];
-    endDate          : Date                    @assert.range: [
+    endDate          : Date             @assert.range: [
         '1900-01-01',
         '9999-12-31'
     ];
-    destination      : String                  @mandatory;
-    meansOfTransport : MeansOfTransport        @mandatory;
-    status           : Association to Status;
+    destination      : String           @mandatory;
+    meansOfTransport : MeansOfTransport @mandatory;
+    status           : Association to Status default '550e8400-e29b-41d4-a716-446655440000';
     comments         : Composition of many Comment
                            on comments.businessTrip = $self;
     hotel            : Boolean;
@@ -36,8 +30,8 @@ entity BusinessTrip : cuid, managed {
 }
 
 entity Flight : cuid {
-    outboundFlightRoute : Association to one FlightRoute @assert.notNull;
-    returnFlightRoute   : Association to one FlightRoute @assert.notNull;
+    outboundFlightRoute : Association to one FlightRoute;
+    returnFlightRoute   : Association to one FlightRoute;
 }
 
 entity Comment : cuid, managed {

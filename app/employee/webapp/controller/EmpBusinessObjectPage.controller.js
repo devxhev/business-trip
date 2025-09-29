@@ -17,17 +17,16 @@ sap.ui.define(
         onInit: function () {
           const oEditModel = new JSONModel({ editMode: false });
           this.getView().setModel(oEditModel, "editModel");
-          this._showBusinessFragment("EmpBusinessObjectPageDisplay");
 
-          /* const router = this.getAppComponent().getRouter();
+          const router = this.getAppComponent().getRouter();
           router
-            .getRoute("EmpBusinessObjectPage")
-            .attachPatternMatched(this._onPatternMatched, this); */
+            .getRoute("BusinessTripObjectPage")
+            .attachPatternMatched(this._onPatternMatched, this);
           PageController.prototype.onInit.apply(this, arguments);
         },
 
         _onPatternMatched: function (oEvent) {
-          /* setTimeout(() => {
+          setTimeout(() => {
             const oContext = this.getView().getBindingContext();
 
             if (!oContext) return;
@@ -35,11 +34,11 @@ sap.ui.define(
             const bIsActive = oContext.getProperty("IsActiveEntity");
 
             if (bIsActive) {
-              this._setEditableState(false);
+              this._toggleEdit(false);
             } else {
-              this._setEditableState(true);
+              this._toggleEdit(true);
             }
-          }, 200); */
+          }, 200);
         },
 
         formatStatusState: function (sStatus) {
@@ -55,46 +54,10 @@ sap.ui.define(
           return "None";
         },
 
-        _showBusinessFragment: function (fragmentName) {
-          let page = this.getView().byId("EmpBusinessObjectPage");
-          page.removeAllSections();
-
-          if (!this._fragmentList[fragmentName]) {
-            return Fragment.load({
-              id: this.getView().createId(fragmentName),
-              name: "at.clouddna.employee.view.fragments." + fragmentName,
-              controller: this,
-            }).then(
-              function (oFragment) {
-                this._fragmentList[fragmentName] = oFragment;
-                // Fragment ist bereits eine ObjectPageSection, direkt hinzufügen
-                if (Array.isArray(oFragment)) {
-                  oFragment.forEach((section) => page.addSection(section));
-                } else {
-                  page.addSection(oFragment);
-                }
-                return oFragment;
-              }.bind(this)
-            );
-          } else {
-            // Bereits geladene Fragmente hinzufügen
-            if (Array.isArray(this._fragmentList[fragmentName])) {
-              this._fragmentList[fragmentName].forEach((section) =>
-                page.addSection(section)
-              );
-            } else {
-              page.addSection(this._fragmentList[fragmentName]);
-            }
-            return Promise.resolve(this._fragmentList[fragmentName]);
-          }
-        },
-
         _toggleEdit: function (bEdit) {
           let oEditModel = this.getView().getModel("editModel");
           oEditModel.setProperty("/editMode", bEdit);
-          return this._showBusinessFragment(
-            bEdit ? "EmpBusinessObjectPageEdit" : "EmpBusinessObjectPageDisplay"
-          ); /* .then(() => {
+          /* .then(() => {
             if (bEdit) this._suspendResumeFlightSelects();
           }); */
         },
@@ -132,13 +95,10 @@ sap.ui.define(
           const obj = ctx.getObject();
           if (!obj) return;
 
-          // Draft erzeugen, falls wir noch auf Active sind (analog zu onEdit)
           try {
             if (obj.IsActiveEntity) {
               await this.editFlow.editDocument(ctx);
             }
-
-            // Nach Edit-Mode wechseln für Kommentar-Eingabe
 
             if (!this._oCommentDialog) {
               this._oCommentDialog = new sap.m.Dialog({
@@ -195,9 +155,7 @@ sap.ui.define(
                       sap.m.MessageToast.show("Kommentar hinzugefügt");
 
                       try {
-                        await this.editFlow.saveDocument(draftCtx, {
-                          control: this.getView(),
-                        });
+                        await this.editFlow.saveDocument(draftCtx);
                       } catch (sideEffectError) {
                         console.warn(
                           "SideEffect request failed:",
@@ -290,37 +248,14 @@ sap.ui.define(
           MessageToast.show("Änderungen verworfen");
         },
 
-        _validateAndPrepareAssociations: function (ctx) {
-          const obj = ctx.getObject();
-          const errors = [];
-          if (!obj.employee?.ID) errors.push("Mitarbeiter fehlt");
-          if (!obj.status?.ID) errors.push("Status fehlt");
-          if (!obj.booking?.ID) errors.push("Booking fehlt");
-
-          if (errors.length) {
-            sap.m.MessageBox.error(errors.join("\n"));
-            return false;
-          }
-
-          if (obj.employee?.ID) ctx.setProperty("employee_ID", obj.employee.ID);
-          if (obj.status?.ID) ctx.setProperty("status_ID", obj.status.ID);
-          if (obj.booking?.ID) ctx.setProperty("booking_ID", obj.booking.ID);
-
-          return true;
-        },
-
         onSave: async function () {
           const oView = this.getView();
           const oCtx = oView.getBindingContext();
           if (!oCtx) return;
 
-          if (!this._validateAndPrepareAssociations(oCtx)) return;
-
           try {
             console.log("Saving", oCtx.getObject());
-            await this.editFlow.saveDocument(oCtx, {
-              control: oView,
-            });
+            await this.editFlow.saveDocument(oCtx);
 
             this._toggleEdit(false);
             sap.m.MessageToast.show("Gespeichert");

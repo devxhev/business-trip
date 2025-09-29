@@ -89,7 +89,7 @@
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:HBox columnGap="0.5rem">
                         <core:Icon src="sap-icon://person-placeholder" />
-                        <m:Text text="{employee/name}" />
+                        <m:Text text="{createdBy}" />
                     </m:HBox>
                     <m:ObjectStatus
                         icon="sap-icon://message-information"
@@ -170,7 +170,351 @@
         <headerContent />
  -->
 
-        <sections />
+        <sections>
+            <ObjectPageSection title="{i18n>coreInformation}">
+                <ObjectPageSubSection>
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                        adjustLabelSpan="false"
+                        singleContainerFullSize="false"
+                    >
+                        <form:content>
+                            <m:Label
+                                labelFor="empnameEdit"
+                                text="{i18n>emp.employeename}"
+                            />
+                            <m:Input
+                                value="{path: 'createdBy'}"
+                                editable="false"
+                            />
+                            <m:Label
+                                labelFor="startDateEdit"
+                                text="{i18n>emp.startDate}"
+                            />
+                            <m:DatePicker
+                                value="{path: 'startDate', type: 'sap.ui.model.odata.type.Date'}"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="medium"
+                                editable="{= ${editModel>/editMode} }"
+                            />
+                            <m:Label
+                                labelFor="endDateEdit"
+                                text="{i18n>emp.endDate}"
+                            />
+                            <m:DatePicker
+                                value="{path: 'endDate', type: 'sap.ui.model.odata.type.Date'}"
+                                valueFormat="yyyy-MM-dd"
+                                displayFormat="medium"
+                                editable="{= ${editModel>/editMode} }"
+                            />
+                            <m:Label
+                                labelFor="destinationEdit"
+                                text="{i18n>emp.destination}"
+                            />
+                            <m:Input
+                                value="{path: 'destination'}"
+                                editable="{= ${editModel>/editMode} }"
+                            />
+                            <m:Label
+                                labelFor="meansOfTransportEdit"
+                                text="{i18n>emp.meansOfTransport}"
+                            />
+                            <m:ComboBox
+                                value="{meansOfTransport}"
+                                change=".onMeansOfTransportChange"
+                                editable="{= ${editModel>/editMode} }"
+                            >
+                                <core:Item
+                                    key="Auto"
+                                    text="Auto"
+                                />
+                                <core:Item
+                                    key="Zug"
+                                    text="Zug"
+                                />
+                                <core:Item
+                                    key="Flug"
+                                    text="Flug"
+                                />
+                            </m:ComboBox>
+                            <m:Label
+                                labelFor="hotelEdit"
+                                text="{i18n>emp.hotel}"
+                            />
+                            <m:Switch
+                                state="{path: 'hotel'}"
+                                visible="{= ${editModel>/editMode} }"
+                            />
+                            <m:Text
+                                text="{path: 'hotel'}"
+                                visible="{= !${editModel>/editMode} }"
+                            />
+                        </form:content>
+                    </form:SimpleForm>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+
+            <ObjectPageSection
+                title="{i18n>flight}"
+                visible="{= %{meansOfTransport} === 'Flug' }"
+            >
+                <ObjectPageSubSection title="{i18n>outboundFlight}">
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                    >
+                        <form:content>
+                            <m:Label text="Route auswählen" />
+                            <m:Select
+                                width="100%"
+                                forceSelection="true"
+                                selectedKey="{flights/outboundFlightRoute_ID}"
+                                change=".onOutboundRouteChange"
+                                items="{ 
+                                    path: '/FlightRoute',
+                                    templateShareable: false,
+                                    parameters: {
+                                        $$ownRequest: true,
+                                        $expand: 'departureLocation,arrivalLocation',
+                                        $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata,arrivalLocation/city'
+                                    }
+                                }"
+                                editable="{= ${editModel>/editMode} }"
+                            >
+                                <core:Item
+                                    key="{ID}"
+                                    text="{= ${flightNumber} + '  ' + ${departureLocation/iata} + ' → ' + ${arrivalLocation/iata} + '  (' + ${departureTime} + '–' + ${arrivalTime} + ')' }"
+                                />
+                            </m:Select>
+                        </form:content>
+                    </form:SimpleForm>
+                </ObjectPageSubSection>
+
+                <ObjectPageSubSection
+                    title="{i18n>returnFlight}"
+                    visible="{= %{meansOfTransport} === 'Flug' }"
+                >
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                    >
+                        <form:content>
+                            <m:Label text="Route auswählen" />
+                            <m:Select
+                                width="100%"
+                                forceSelection="true"
+                                selectedKey="{flights/returnFlightRoute_ID}"
+                                items="{ 
+                                    path: '/FlightRoute',
+                                    templateShareable: false,
+                                    parameters: {
+                                        $$ownRequest: true,
+                                        $expand: 'departureLocation,arrivalLocation',
+                                        $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata'
+                                    }
+                                }"
+                                editable="{= ${editModel>/editMode} }"
+                            >
+                                <core:Item
+                                    key="{ID}"
+                                    text="{= ${flightNumber} + '  ' + ${departureLocation/iata} + ' → ' + ${arrivalLocation/iata} + '  (' + ${departureTime} + '–' + ${arrivalTime} + ')' }"
+                                />
+                            </m:Select>
+                        </form:content>
+                    </form:SimpleForm>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>bookinginformation}">
+                <ObjectPageSubSection>
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        labelSpanL="3"
+                        labelSpanM="3"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        columnsL="1"
+                        columnsM="1"
+                        adjustLabelSpan="false"
+                        singleContainerFullSize="false"
+                    >
+                        <m:Label text="{i18n>bookingnumber}" />
+                        <m:Input
+                            value="{path: 'booking/bookingNumber'}"
+                            editable="{= ${editModel>/editMode} }"
+                        />
+                        <m:Label text="{i18n>bookingStatus}" />
+                        <m:Select
+                            selectedKey="{path: 'booking/status/name', formatter:'.formatStatusState'}"
+                            editable="{= ${editModel>/editMode} }"
+                        >
+                            <core:Item
+                                key="Neu"
+                                text="Neu"
+                            />
+                            <core:Item
+                                key="Bereit zur Bearbeitung"
+                                text="Bereit zur Bearbeitung"
+                            />
+                            <core:Item
+                                key="In Bearbeitung"
+                                text="In Bearbeitung"
+                            />
+                            <core:Item
+                                key="Gebucht"
+                                text="Gebucht"
+                            />
+                            <core:Item
+                                key="Abgeschlossen"
+                                text="Abgeschlossen"
+                            />
+                            <core:Item
+                                key="Storniert"
+                                text="Storniert"
+                            />
+                        </m:Select>
+                    </form:SimpleForm>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>attachments}">
+                <ObjectPageSubSection>
+                    <actions>
+                        <unified:FileUploader
+                            buttonText="{i18n>upload}"
+                            placeholder="{i18n>search}"
+                            uploadOnChange="false"
+                            icon="sap-icon://upload"
+                            change=".onFileChange"
+                            fileAllowed="image/*"
+                            buttonOnly="false"
+                        />
+                    </actions>
+                    <m:List
+                        items="{path: 'attachments'}"
+                        mode="Delete"
+                        delete=".onDeleteAttachment"
+                    >
+                        <m:CustomListItem>
+                            <m:HBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                                class="sapUiSmallMargin"
+                            >
+                                <m:VBox>
+                                    <m:Text
+                                        text="{fileName}"
+                                        class="sapMH4FontSize"
+                                    />
+                                    <m:Text
+                                        text="{description}"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                    <m:Text
+                                        text="{path: 'size', formatter: '.formatFileSize'}"
+                                        class="sapUiTinyMarginTop"
+                                    />
+                                </m:VBox>
+                                <m:Link
+                                    text="{i18n>show}"
+                                    target="_blank"
+                                    href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
+                                />
+                            </m:HBox>
+                        </m:CustomListItem>
+                    </m:List>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>additionalcomments}">
+                <ObjectPageSubSection>
+                    <actions>
+                        <m:Button
+                            text="{i18n>addComment}"
+                            icon="sap-icon://add"
+                            press=".onAddCommentPress"
+                        />
+                    </actions>
+                    <m:List
+                        items="{path:'comments'}"
+                        showSeparators="None"
+                        growing="false"
+                        mode="Delete"
+                        delete=".onDeleteComment"
+                    >
+                        <m:CustomListItem class="commentItem">
+                            <m:HBox
+                                alignItems="Start"
+                                class="sapUiSmallMargin"
+                                justifyContent="Start"
+                            >
+                                <m:Avatar
+                                    displayShape="Circle"
+                                    backgroundColor="Accent6"
+                                    initials="{= ${createdBy} ? ${createdBy}.substring(0,2).toUpperCase() : 'U'}"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <m:VBox
+                                    width="100%"
+                                    class="sapUiSmallMarginBegin"
+                                >
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon
+                                            src="sap-icon://person-placeholder"
+                                        />
+                                        <m:Text text="{createdBy}" />
+                                    </m:HBox>
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon src="sap-icon://calendar" />
+                                        <m:Text
+                                            text="{ path:'createdAt', formatter:'.formatDateTime'}"
+                                            wrapping="false"
+                                            class="sapUiTinyMarginBottom sapUiSmallFontSize"
+                                        />
+                                    </m:HBox>
+                                    <m:HBox
+                                        columnGap="1rem"
+                                        class="sapUiTinyMarginBottom"
+                                    >
+                                        <core:Icon src="sap-icon://comment" />
+                                        <m:TextArea
+                                            value="{ path:'message'}"
+                                            editable="false"
+                                        />
+                                    </m:HBox>
+                                </m:VBox>
+                            </m:HBox>
+                        </m:CustomListItem>
+                    </m:List>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+        </sections>
 
         <footer>
             <m:Toolbar>

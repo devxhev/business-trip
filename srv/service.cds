@@ -70,7 +70,6 @@ service BusinessService @(path: 'business') {
     //@cds.redirection.target: 'FlightRoute'
     //entity ManageFlightRoute as projection on my.FlightRoute;
 
-    entity Employee     as projection on my.Employee;
     entity Status       as projection on my.Status;
     entity Booking      as projection on my.Booking;
     entity Airports     as projection on my.Airports;

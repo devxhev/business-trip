@@ -105,9 +105,9 @@
           }
         },
         {
-          "name": "BusinessTripEmpBusinessObjectPagePage",
+          "name": "BusinessTripObjectPage",
           "pattern": "BusinessTrip({BusinessTripKey}):?query:",
-          "target": "BusinessTripEmpBusinessObjectPagePage"
+          "target": "BusinessTripObjectPage"
         }
       ],
       "targets": {
@@ -122,7 +122,7 @@
               "navigation": {
                 "BusinessTrip": {
                   "detail": {
-                    "route": "BusinessTripEmpBusinessObjectPagePage"
+                    "route": "BusinessTripObjectPage"
                   }
                 }
               },
@@ -137,9 +137,9 @@
             }
           }
         },
-        "BusinessTripEmpBusinessObjectPagePage": {
+        "BusinessTripObjectPage": {
           "type": "Component",
-          "id": "BusinessTripEmpBusinessObjectPagePage",
+          "id": "BusinessTripObjectPage",
           "name": "sap.fe.core.fpm",
           "options": {
             "settings": {

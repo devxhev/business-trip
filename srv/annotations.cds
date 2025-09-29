@@ -1,7 +1,6 @@
 using {at.clouddna as service} from '../db/schema';
 
 annotate service.BusinessTrip with {
-    employee         @title: 'Employee';
     startDate        @title: 'Start Date';
     endDate          @title: 'End Date';
     destination      @title: 'Destination';
