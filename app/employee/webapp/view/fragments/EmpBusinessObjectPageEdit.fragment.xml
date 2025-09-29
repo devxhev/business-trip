@@ -59,12 +59,16 @@
                         <m:Input
                             id="destinationEdit"
                             value="{path: 'destination'}"
+                            editable="false"
                         />
                         <m:Label
                             labelFor="meansOfTransportEdit"
                             text="{i18n>emp.meansOfTransport}"
                         />
-                        <m:ComboBox value="{meansOfTransport}">
+                        <m:ComboBox
+                            value="{meansOfTransport}"
+                            change=".onMeansOfTransportChange"
+                        >
                             <core:Item
                                 key="Auto"
                                 text="Auto"
@@ -105,16 +109,18 @@
                         <!-- Route-Auswahl statt Einzel-Inputs -->
                         <m:Label text="Route auswählen" />
                         <m:Select
+                            id="outboundRouteSelect"
                             width="100%"
                             forceSelection="true"
                             selectedKey="{flights/outboundFlightRoute_ID}"
+                            change=".onOutboundRouteChange"
                             items="{ 
                                 path: '/FlightRoute',
                                 templateShareable: false,
                                 parameters: {
                                     $$ownRequest: true,
                                     $expand: 'departureLocation,arrivalLocation',
-                                    $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata'
+                                    $select: 'ID,flightNumber,departureTime,arrivalTime,departureLocation/iata,arrivalLocation/iata,arrivalLocation/city'
                                 }
                             }"
                         >
@@ -147,6 +153,7 @@
                             width="100%"
                             forceSelection="true"
                             selectedKey="{flights/returnFlightRoute_ID}"
+                            id="returnRouteSelect"
                             items="{ 
                                 path: '/FlightRoute',
                                 templateShareable: false,
@@ -214,7 +221,11 @@
             </ObjectPageSubSection>
 
             <ObjectPageSubSection title="{i18n>attachments}">
-                <m:List items="{path: 'attachments'}">
+                <m:List
+                    items="{path: 'attachments'}"
+                    mode="Delete"
+                    delete=".onDeleteAttachment"
+                >
                     <m:CustomListItem>
                         <m:HBox
                             justifyContent="SpaceBetween"
@@ -240,10 +251,6 @@
                                 target="_blank"
                                 href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
                             />
-                            <m:Button
-                                icon="sap-icon://delete"
-                                press=".onDeleteAttachment"
-                            />
                         </m:HBox>
                     </m:CustomListItem>
                 </m:List>
@@ -254,6 +261,8 @@
                     items="{path:'comments'}"
                     showSeparators="None"
                     growing="false"
+                    mode="Delete"
+                    delete=".onDeleteComment"
                 >
                     <m:CustomListItem class="commentItem">
                         <m:HBox
@@ -298,10 +307,6 @@
                                     <core:Icon src="sap-icon://comment" />
                                     <m:TextArea value="{ path:'message'}" />
                                 </m:HBox>
-                                <m:Button
-                                    icon="sap-icon://delete"
-                                    press=".onDeleteComment"
-                                />
                             </m:VBox>
                         </m:HBox>
                     </m:CustomListItem>

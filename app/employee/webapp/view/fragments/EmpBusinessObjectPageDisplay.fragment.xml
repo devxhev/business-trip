@@ -108,6 +108,8 @@
                         <m:Text
                             text="{flights/outboundFlightRoute/arrivalTime}"
                         />
+                        <m:Label text="{i18n>flight.startDay}" />
+                        <m:Text text="{startDate}" />
                     </f:content>
                 </f:SimpleForm>
             </ObjectPageSubSection>
@@ -151,6 +153,8 @@
                         <m:Text
                             text="{flights/returnFlightRoute/arrivalTime}"
                         />
+                        <m:Label text="{i18n>flight.returnDay}" />
+                        <m:Text text="{endDate}" />
                     </f:content>
                 </f:SimpleForm>
             </ObjectPageSubSection>
@@ -180,11 +184,14 @@
             <ObjectPageSubSection title="{i18n>attachments}">
                 <actions>
                     <unified:FileUploader
-                        icon="sap-icon://upload"
+                        id="fileUploader"
                         buttonText="{i18n>upload}"
                         placeholder="{i18n>search}"
-                        uploadComplete=".onUploadComplete"
+                        uploadOnChange="false"
+                        icon="sap-icon://upload"
+                        change=".onFileChange"
                         fileAllowed="image/*"
+                        buttonOnly="false"
                     />
                 </actions>
                 <m:List items="{path: 'attachments'}">
