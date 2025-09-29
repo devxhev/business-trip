@@ -58,6 +58,7 @@ sap.ui.define(
         _showBusinessFragment: function (fragmentName) {
           let page = this.getView().byId("EmpBusinessObjectPage");
           page.removeAllSections();
+
           if (!this._fragmentList[fragmentName]) {
             return Fragment.load({
               id: this.getView().createId(fragmentName),
@@ -66,12 +67,24 @@ sap.ui.define(
             }).then(
               function (oFragment) {
                 this._fragmentList[fragmentName] = oFragment;
-                page.addSection(oFragment);
+                // Fragment ist bereits eine ObjectPageSection, direkt hinzufügen
+                if (Array.isArray(oFragment)) {
+                  oFragment.forEach((section) => page.addSection(section));
+                } else {
+                  page.addSection(oFragment);
+                }
                 return oFragment;
               }.bind(this)
             );
           } else {
-            page.addSection(this._fragmentList[fragmentName]);
+            // Bereits geladene Fragmente hinzufügen
+            if (Array.isArray(this._fragmentList[fragmentName])) {
+              this._fragmentList[fragmentName].forEach((section) =>
+                page.addSection(section)
+              );
+            } else {
+              page.addSection(this._fragmentList[fragmentName]);
+            }
             return Promise.resolve(this._fragmentList[fragmentName]);
           }
         },
@@ -182,7 +195,6 @@ sap.ui.define(
                       sap.m.MessageToast.show("Kommentar hinzugefügt");
 
                       try {
-                        await draftCtx.requestSideEffects(["comments"]);
                         await this.editFlow.saveDocument(draftCtx, {
                           control: this.getView(),
                         });
@@ -351,7 +363,6 @@ sap.ui.define(
           }
         },
 
-        // Helper: Control aus dem Edit-Fragment anhand der lokalen ID holen
         _fb: function (fragmentId, localId) {
           const fragId = this.getView().createId(fragmentId);
           return Fragment.byId(fragId, localId);
@@ -362,7 +373,7 @@ sap.ui.define(
           const sValue = oFileUploader.getValue();
 
           if (!sValue) {
-            return; // Keine Datei ausgewählt
+            return;
           }
 
           const oDomRef = oFileUploader.getDomRef();
@@ -383,13 +394,11 @@ sap.ui.define(
           }
 
           try {
-            // Erst in Edit-Mode wechseln (erzeugt Draft)
             const obj = ctx.getObject();
             let draftCtx = ctx;
 
             if (obj && obj.IsActiveEntity) {
               await this.editFlow.editDocument(ctx);
-              // Nach Edit den neuen Draft-Context holen
               draftCtx = this.getView().getBindingContext();
             }
 
@@ -406,7 +415,6 @@ sap.ui.define(
                 const base64Content = reader.result.split(",")[1];
                 const model = draftCtx.getModel();
 
-                // Attachments-Binding vom Draft-Context aus
                 const attachmentsBinding = model.bindList(
                   draftCtx.getPath() + "/attachments"
                 );
@@ -422,6 +430,7 @@ sap.ui.define(
 
                 // Warten bis erstellt
                 await newAttachment.created();
+                console.log("Attachment created:", newAttachment);
 
                 sap.m.MessageToast.show(
                   `Datei "${oFile.name}" erfolgreich hochgeladen`
@@ -430,7 +439,7 @@ sap.ui.define(
 
                 // SideEffects für sofortige Anzeige
                 try {
-                  await draftCtx.requestSideEffects(["attachments"]);
+                  await this.editFlow.saveDocument(draftCtx);
                 } catch (sideEffectError) {
                   console.warn("SideEffect request failed:", sideEffectError);
                   model.refresh();

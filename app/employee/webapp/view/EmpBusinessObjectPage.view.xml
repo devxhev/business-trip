@@ -16,6 +16,117 @@
         showFooter="{= ${editModel>/editMode} }"
     >
         <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <breadcrumbs>
+                    <m:Breadcrumbs id="breadcrumbsId">
+                        <m:Link
+                            text="{i18n>back}"
+                            press=".onNavBack"
+                            icon="sap-icon://nav-back"
+                        />
+                    </m:Breadcrumbs>
+                </breadcrumbs>
+
+                <expandedHeading>
+                    <m:HBox>
+                        <m:Title
+                            text="{occasion}"
+                            wrapping="true"
+                        />
+                    </m:HBox>
+                </expandedHeading>
+
+                <expandedContent>
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://calendar" />
+                        <m:Text text="{startDate} - {endDate}" />
+                    </m:HBox>
+                </expandedContent>
+
+                <snappedContent>
+                    <m:Title
+                        text="{occasion}"
+                        wrapping="true"
+                    />
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://calendar" />
+                        <m:Text text="{startDate} - {endDate}" />
+                    </m:HBox>
+                </snappedContent>
+                <snappedTitleOnMobile>
+                    <m:Title
+                        text="{occasion}"
+                        wrapping="true"
+                    />
+                </snappedTitleOnMobile>
+
+                <actions>
+                    <m:Toolbar style="Clear">
+                        <m:VBox alignContent="End">
+                            <m:HBox columnGap="0.5rem">
+                                <m:Button
+                                    text="{i18n>emp.edit}"
+                                    press=".onEdit"
+                                    type="Emphasized"
+                                    icon="sap-icon://edit"
+                                    visible="{= !${editModel>/editMode} }"
+                                />
+                                <m:Button
+                                    text="{i18n>delete}"
+                                    press=".onDelete"
+                                    type="Reject"
+                                    icon="sap-icon://delete"
+                                    visible="{= !${editModel>/editMode} }"
+                                />
+                            </m:HBox>
+                        </m:VBox>
+                    </m:Toolbar>
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <headerContent>
+            <m:FlexBox wrap="Wrap">
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://person-placeholder" />
+                        <m:Text text="{employee/name}" />
+                    </m:HBox>
+                    <m:ObjectStatus
+                        icon="sap-icon://message-information"
+                        text="{status/name}"
+                        state="{path: 'status/name', formatter:'.formatStatusState'}"
+                    />
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon
+                            src="{= ${meansOfTransport} === 'Flug' ? 'sap-icon://flight' : ${meansOfTransport} === 'Zug' ? 'sap-icon://bus-public-transport' : 'sap-icon://car-rental' }"
+                        />
+                        <m:Text text="{meansOfTransport}" />
+                    </m:HBox>
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://home" />
+                        <m:Text
+                            text="{= ${hotel} ? 'Hotel benötigt' : 'Kein Hotel benötigt' }"
+                        />
+                    </m:HBox>
+                </layout:VerticalLayout>
+
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://map" />
+                        <m:Text text="{destination}" />
+                    </m:HBox>
+                    <m:HBox
+                        columnGap="0.5rem"
+                        visible="{= ${booking/bookingNumber} !== undefined }"
+                    >
+                        <core:Icon src="sap-icon://business-card" />
+                        <m:Text text="Buchung: {booking/bookingNumber}" />
+                    </m:HBox>
+                </layout:VerticalLayout>
+            </m:FlexBox>
+        </headerContent>
+
+        <!-- <headerTitle>
             <ObjectPageHeader objectTitle="{occasion}">
                 <ObjectPageHeaderContent>
                     <content>
@@ -57,6 +168,7 @@
         </headerTitle>
 
         <headerContent />
+ -->
 
         <sections />
 

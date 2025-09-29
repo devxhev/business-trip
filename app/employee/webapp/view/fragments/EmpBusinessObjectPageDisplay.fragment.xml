@@ -8,157 +8,148 @@
     xmlns:f="sap.ui.layout.form"
 >
     <ObjectPageSection
-        titleUppercase="false"
-        id="primaryData"
-        title="{i18n>generalinformation}"
+        id="coreinformation"
+        title="{i18n>coreInformation}"
     >
+        <ObjectPageSubSection>
+            <f:SimpleForm
+                xmlns:f="sap.ui.layout.form"
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanL="3"
+                labelSpanM="3"
+                emptySpanL="0"
+                emptySpanM="0"
+                columnsL="1"
+                columnsM="1"
+                adjustLabelSpan="false"
+                singleContainerFullSize="false"
+            >
+                <f:content>
+                    <m:Label
+                        labelFor="empname"
+                        text="{i18n>emp.employeename}"
+                    />
+                    <m:Text
+                        id="empname"
+                        text="{path: 'employee/name'}"
+                    />
+                    <m:Label
+                        labelFor="startDate"
+                        text="{i18n>emp.startDate}"
+                    />
+                    <m:Text text="{path: 'startDate'}" />
+                    <m:Label
+                        labelFor="endDate"
+                        text="{i18n>emp.endDate}"
+                    />
+                    <m:Text text="{path: 'endDate'}" />
+                    <m:Label
+                        labelFor="destination"
+                        text="{i18n>emp.destination}"
+                    />
+                    <m:Text text="{path: 'destination'}" />
+                    <m:Label
+                        labelFor="meansOfTransport"
+                        text="{i18n>emp.meansOfTransport}"
+                    />
+                    <m:Text text="{path: 'meansOfTransport'}" />
+                    <m:Label
+                        labelFor="hotel"
+                        text="{i18n>emp.hotel}"
+                    />
+                    <m:Text text="{path: 'hotel'}" />
+                </f:content>
+            </f:SimpleForm>
+        </ObjectPageSubSection>
+    </ObjectPageSection>
+
+    <ObjectPageSection
+        title="{i18n>flight}"
+        visible="{= %{meansOfTransport} === 'Flug' }"
+    >
+        <ObjectPageSubSection title="{i18n>outboundFlight}">
+            <f:SimpleForm
+                xmlns:f="sap.ui.layout.form"
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanL="3"
+                labelSpanM="3"
+                emptySpanL="0"
+                emptySpanM="0"
+                columnsL="1"
+                columnsM="1"
+            >
+                <f:content>
+                    <m:Label text="{i18n>flight.number}" />
+                    <m:Text text="{flights/outboundFlightRoute/flightNumber}" />
+
+                    <m:Label text="{i18n>flight.departure}" />
+                    <m:Text
+                        text="{flights/outboundFlightRoute/departureLocation/name} ({flights/outboundFlightRoute/departureLocation/iata})"
+                    />
+
+                    <m:Label text="{i18n>flight.departureTime}" />
+                    <m:Text
+                        text="{flights/outboundFlightRoute/departureTime}"
+                    />
+
+                    <m:Label text="{i18n>flight.arrival}" />
+                    <m:Text
+                        text="{flights/outboundFlightRoute/arrivalLocation/name} ({flights/outboundFlightRoute/arrivalLocation/iata})"
+                    />
+
+                    <m:Label text="{i18n>flight.arrivalTime}" />
+                    <m:Text text="{flights/outboundFlightRoute/arrivalTime}" />
+                    <m:Label text="{i18n>flight.startDay}" />
+                    <m:Text text="{startDate}" />
+                </f:content>
+            </f:SimpleForm>
+        </ObjectPageSubSection>
+
+        <ObjectPageSubSection
+            title="{i18n>returnFlight}"
+            visible="{= %{meansOfTransport} === 'Flug' }"
+        >
+            <f:SimpleForm
+                xmlns:f="sap.ui.layout.form"
+                editable="false"
+                layout="ResponsiveGridLayout"
+                labelSpanL="3"
+                labelSpanM="3"
+                emptySpanL="0"
+                emptySpanM="0"
+                columnsL="1"
+                columnsM="1"
+            >
+                <f:content>
+                    <m:Label text="{i18n>flight.number}" />
+                    <m:Text text="{flights/returnFlightRoute/flightNumber}" />
+
+                    <m:Label text="{i18n>flight.departure}" />
+                    <m:Text
+                        text="{flights/returnFlightRoute/departureLocation/name} ({flights/returnFlightRoute/departureLocation/iata})"
+                    />
+
+                    <m:Label text="{i18n>flight.departureTime}" />
+                    <m:Text text="{flights/returnFlightRoute/departureTime}" />
+
+                    <m:Label text="{i18n>flight.arrival}" />
+                    <m:Text
+                        text="{flights/returnFlightRoute/arrivalLocation/name} ({flights/returnFlightRoute/arrivalLocation/iata})"
+                    />
+
+                    <m:Label text="{i18n>flight.arrivalTime}" />
+                    <m:Text text="{flights/returnFlightRoute/arrivalTime}" />
+                    <m:Label text="{i18n>flight.returnDay}" />
+                    <m:Text text="{endDate}" />
+                </f:content>
+            </f:SimpleForm>
+        </ObjectPageSubSection>
+    </ObjectPageSection>
+    <ObjectPageSection title="{i18n>bookinginformation}">
         <subSections>
-            <ObjectPageSubSection
-                id="coreinformation"
-                title="{i18n>coreInformation}"
-            >
-                <f:SimpleForm
-                    xmlns:f="sap.ui.layout.form"
-                    editable="false"
-                    layout="ResponsiveGridLayout"
-                    labelSpanL="3"
-                    labelSpanM="3"
-                    emptySpanL="0"
-                    emptySpanM="0"
-                    columnsL="1"
-                    columnsM="1"
-                    adjustLabelSpan="false"
-                    singleContainerFullSize="false"
-                >
-                    <f:content>
-                        <m:Label
-                            labelFor="empname"
-                            text="{i18n>emp.employeename}"
-                        />
-                        <m:Text
-                            id="empname"
-                            text="{path: 'employee/name'}"
-                        />
-                        <m:Label
-                            labelFor="startDate"
-                            text="{i18n>emp.startDate}"
-                        />
-                        <m:Text text="{path: 'startDate'}" />
-                        <m:Label
-                            labelFor="endDate"
-                            text="{i18n>emp.endDate}"
-                        />
-                        <m:Text text="{path: 'endDate'}" />
-                        <m:Label
-                            labelFor="destination"
-                            text="{i18n>emp.destination}"
-                        />
-                        <m:Text text="{path: 'destination'}" />
-                        <m:Label
-                            labelFor="meansOfTransport"
-                            text="{i18n>emp.meansOfTransport}"
-                        />
-                        <m:Text text="{path: 'meansOfTransport'}" />
-                        <m:Label
-                            labelFor="hotel"
-                            text="{i18n>emp.hotel}"
-                        />
-                        <m:Text text="{path: 'hotel'}" />
-                    </f:content>
-                </f:SimpleForm>
-            </ObjectPageSubSection>
-
-            <ObjectPageSubSection
-                title="{i18n>outboundFlight}"
-                visible="{= %{meansOfTransport} === 'Flug' }"
-            >
-                <f:SimpleForm
-                    xmlns:f="sap.ui.layout.form"
-                    editable="false"
-                    layout="ResponsiveGridLayout"
-                    labelSpanL="3"
-                    labelSpanM="3"
-                    emptySpanL="0"
-                    emptySpanM="0"
-                    columnsL="1"
-                    columnsM="1"
-                >
-                    <f:content>
-                        <m:Label text="{i18n>flight.number}" />
-                        <m:Text
-                            text="{flights/outboundFlightRoute/flightNumber}"
-                        />
-
-                        <m:Label text="{i18n>flight.departure}" />
-                        <m:Text
-                            text="{flights/outboundFlightRoute/departureLocation/name} ({flights/outboundFlightRoute/departureLocation/iata})"
-                        />
-
-                        <m:Label text="{i18n>flight.departureTime}" />
-                        <m:Text
-                            text="{flights/outboundFlightRoute/departureTime}"
-                        />
-
-                        <m:Label text="{i18n>flight.arrival}" />
-                        <m:Text
-                            text="{flights/outboundFlightRoute/arrivalLocation/name} ({flights/outboundFlightRoute/arrivalLocation/iata})"
-                        />
-
-                        <m:Label text="{i18n>flight.arrivalTime}" />
-                        <m:Text
-                            text="{flights/outboundFlightRoute/arrivalTime}"
-                        />
-                        <m:Label text="{i18n>flight.startDay}" />
-                        <m:Text text="{startDate}" />
-                    </f:content>
-                </f:SimpleForm>
-            </ObjectPageSubSection>
-            <ObjectPageSubSection
-                title="{i18n>returnFlight}"
-                visible="{= %{meansOfTransport} === 'Flug' }"
-            >
-                <f:SimpleForm
-                    xmlns:f="sap.ui.layout.form"
-                    editable="false"
-                    layout="ResponsiveGridLayout"
-                    labelSpanL="3"
-                    labelSpanM="3"
-                    emptySpanL="0"
-                    emptySpanM="0"
-                    columnsL="1"
-                    columnsM="1"
-                >
-                    <f:content>
-                        <m:Label text="{i18n>flight.number}" />
-                        <m:Text
-                            text="{flights/returnFlightRoute/flightNumber}"
-                        />
-
-                        <m:Label text="{i18n>flight.departure}" />
-                        <m:Text
-                            text="{flights/returnFlightRoute/departureLocation/name} ({flights/returnFlightRoute/departureLocation/iata})"
-                        />
-
-                        <m:Label text="{i18n>flight.departureTime}" />
-                        <m:Text
-                            text="{flights/returnFlightRoute/departureTime}"
-                        />
-
-                        <m:Label text="{i18n>flight.arrival}" />
-                        <m:Text
-                            text="{flights/returnFlightRoute/arrivalLocation/name} ({flights/returnFlightRoute/arrivalLocation/iata})"
-                        />
-
-                        <m:Label text="{i18n>flight.arrivalTime}" />
-                        <m:Text
-                            text="{flights/returnFlightRoute/arrivalTime}"
-                        />
-                        <m:Label text="{i18n>flight.returnDay}" />
-                        <m:Text text="{endDate}" />
-                    </f:content>
-                </f:SimpleForm>
-            </ObjectPageSubSection>
-            <ObjectPageSubSection title="{i18n>bookinginformation}">
+            <ObjectPageSubSection>
                 <f:SimpleForm
                     xmlns:f="sap.ui.layout.form"
                     editable="false"
@@ -181,119 +172,123 @@
                     />
                 </f:SimpleForm>
             </ObjectPageSubSection>
-            <ObjectPageSubSection title="{i18n>attachments}">
-                <actions>
-                    <unified:FileUploader
-                        id="fileUploader"
-                        buttonText="{i18n>upload}"
-                        placeholder="{i18n>search}"
-                        uploadOnChange="false"
-                        icon="sap-icon://upload"
-                        change=".onFileChange"
-                        fileAllowed="image/*"
-                        buttonOnly="false"
-                    />
-                </actions>
-                <m:List items="{path: 'attachments'}">
-                    <m:CustomListItem>
-                        <m:HBox
-                            justifyContent="SpaceBetween"
-                            alignItems="Center"
-                            class="sapUiSmallMargin"
-                        >
-                            <m:VBox>
-                                <m:Text
-                                    text="{fileName}"
-                                    class="sapMH4FontSize"
-                                />
-                                <m:Text
-                                    text="{description}"
-                                    class="sapUiTinyMarginTop"
-                                />
-                                <m:Text
-                                    text="{
+        </subSections>
+    </ObjectPageSection>
+    <ObjectPageSection title="{i18n>attachments}">
+        <ObjectPageSubSection>
+            <actions>
+                <unified:FileUploader
+                    id="fileUploader"
+                    buttonText="{i18n>upload}"
+                    placeholder="{i18n>search}"
+                    uploadOnChange="false"
+                    icon="sap-icon://upload"
+                    change=".onFileChange"
+                    fileAllowed="image/*"
+                    buttonOnly="false"
+                />
+            </actions>
+            <m:List items="{path: 'attachments'}">
+                <m:CustomListItem>
+                    <m:HBox
+                        justifyContent="SpaceBetween"
+                        alignItems="Center"
+                        class="sapUiSmallMargin"
+                    >
+                        <m:VBox>
+                            <m:Text
+                                text="{fileName}"
+                                class="sapMH4FontSize"
+                            />
+                            <m:Text
+                                text="{description}"
+                                class="sapUiTinyMarginTop"
+                            />
+                            <m:Text
+                                text="{
                         path: 'size',
                         formatter: '.formatFileSize'
                     }"
-                                    class="sapUiTinyMarginTop"
-                                />
-                            </m:VBox>
-                            <m:Link
-                                text="{i18n>show}"
-                                target="_blank"
-                                href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
-                                emphasized="true"
+                                class="sapUiTinyMarginTop"
                             />
-                        </m:HBox>
-                    </m:CustomListItem>
-                </m:List>
-            </ObjectPageSubSection>
-            <ObjectPageSubSection
-                title="{i18n>additionalcomments}"
-                id="commentsSection"
+                        </m:VBox>
+                        <m:Link
+                            text="{i18n>show}"
+                            target="_blank"
+                            href="{path: 'content', type:'sap.ui.model.odata.type.Stream'}"
+                            emphasized="true"
+                        />
+                    </m:HBox>
+                </m:CustomListItem>
+            </m:List>
+        </ObjectPageSubSection>
+    </ObjectPageSection>
+    <ObjectPageSection
+        title="{i18n>additionalcomments}"
+        id="commentsSection"
+    >
+        <ObjectPageSubSection>
+            <actions>
+                <m:Button
+                    text="{i18n>addComment}"
+                    icon="sap-icon://add"
+                    press=".onAddCommentPress"
+                />
+            </actions>
+            <m:List
+                items="{path:'comments'}"
+                showSeparators="None"
+                growing="false"
             >
-                <actions>
-                    <m:Button
-                        text="{i18n>addComment}"
-                        icon="sap-icon://add"
-                        press=".onAddCommentPress"
-                    />
-                </actions>
-                <m:List
-                    items="{path:'comments'}"
-                    showSeparators="None"
-                    growing="false"
-                >
-                    <m:CustomListItem class="commentItem">
-                        <m:HBox
-                            alignItems="Start"
-                            class="sapUiSmallMargin"
-                            justifyContent="Start"
+                <m:CustomListItem class="commentItem">
+                    <m:HBox
+                        alignItems="Start"
+                        class="sapUiSmallMargin"
+                        justifyContent="Start"
+                    >
+                        <m:Avatar
+                            displayShape="Circle"
+                            backgroundColor="Accent6"
+                            initials="{= ${createdBy} ? ${createdBy}.substring(0,2).toUpperCase() : 'U'}"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:VBox
+                            width="100%"
+                            class="sapUiSmallMarginBegin"
                         >
-                            <m:Avatar
-                                displayShape="Circle"
-                                backgroundColor="Accent6"
-                                initials="{= ${createdBy} ? ${createdBy}.substring(0,2).toUpperCase() : 'U'}"
-                                class="sapUiTinyMarginEnd"
-                            />
-                            <m:VBox
-                                width="100%"
-                                class="sapUiSmallMarginBegin"
+                            <m:HBox
+                                columnGap="1rem"
+                                class="sapUiTinyMarginBottom"
                             >
-                                <m:HBox
-                                    columnGap="1rem"
-                                    class="sapUiTinyMarginBottom"
-                                >
-                                    <core:Icon
-                                        src="sap-icon://person-placeholder"
-                                    />
-                                    <m:Text text="{createdBy}" />
-                                </m:HBox>
-                                <m:HBox
-                                    columnGap="1rem"
-                                    class="sapUiTinyMarginBottom"
-                                >
-                                    <core:Icon src="sap-icon://calendar" />
-                                    <m:Text
-                                        text="{ path:'createdAt', formatter:'.formatDateTime'}"
-                                        wrapping="false"
-                                        class="sapUiTinyMarginBottom sapUiSmallFontSize"
-                                    />
-                                </m:HBox>
-                                <m:HBox
-                                    columnGap="1rem"
-                                    class="sapUiTinyMarginBottom"
-                                >
-                                    <core:Icon src="sap-icon://comment" />
-                                    <m:Text
-                                        text="{ path:'message', formatter:'.formatMessage'}"
-                                    />
-                                </m:HBox>
-                            </m:VBox>
-                        </m:HBox>
-                    </m:CustomListItem>
-                </m:List>
-            </ObjectPageSubSection>
-        </subSections>
+                                <core:Icon
+                                    src="sap-icon://person-placeholder"
+                                />
+                                <m:Text text="{createdBy}" />
+                            </m:HBox>
+                            <m:HBox
+                                columnGap="1rem"
+                                class="sapUiTinyMarginBottom"
+                            >
+                                <core:Icon src="sap-icon://calendar" />
+                                <m:Text
+                                    text="{ path:'createdAt', formatter:'.formatDateTime'}"
+                                    wrapping="false"
+                                    class="sapUiTinyMarginBottom sapUiSmallFontSize"
+                                />
+                            </m:HBox>
+                            <m:HBox
+                                columnGap="1rem"
+                                class="sapUiTinyMarginBottom"
+                            >
+                                <core:Icon src="sap-icon://comment" />
+                                <m:Text
+                                    text="{ path:'message', formatter:'.formatMessage'}"
+                                />
+                            </m:HBox>
+                        </m:VBox>
+                    </m:HBox>
+                </m:CustomListItem>
+            </m:List>
+        </ObjectPageSubSection>
     </ObjectPageSection>
 </core:FragmentDefinition>
