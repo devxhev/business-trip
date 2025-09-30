@@ -78,6 +78,13 @@
                                     icon="sap-icon://delete"
                                     visible="{= !${editModel>/editMode} }"
                                 />
+                                <m:Button
+                                    text="{i18n>submit}"
+                                    press=".onSubmit"
+                                    type="Success"
+                                    icon="sap-icon://paper-plane"
+                                    visible="{= !${editModel>/editMode} }"
+                                />
                             </m:HBox>
                         </m:VBox>
                     </m:Toolbar>
@@ -87,21 +94,49 @@
         <headerContent>
             <m:FlexBox wrap="Wrap">
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Label
+                        text="Erstellt von"
+                        class="sapUiTinyMarginBottom"
+                    />
                     <m:HBox columnGap="0.5rem">
                         <core:Icon src="sap-icon://person-placeholder" />
                         <m:Text text="{createdBy}" />
                     </m:HBox>
+
+                    <m:Label
+                        text="Status"
+                        class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                    />
                     <m:ObjectStatus
                         icon="sap-icon://message-information"
                         text="{status/name}"
                         state="{path: 'status/name', formatter:'.formatStatusState'}"
                     />
-                    <m:HBox columnGap="0.5rem">
+                </layout:VerticalLayout>
+
+                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                    <m:Label
+                        text="Reisedetails"
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <m:HBox
+                        columnGap="0.5rem"
+                        class="sapUiTinyMarginBottom"
+                    >
+                        <core:Icon src="sap-icon://map" />
+                        <m:Text text="{destination}" />
+                    </m:HBox>
+
+                    <m:HBox
+                        columnGap="0.5rem"
+                        class="sapUiTinyMarginBottom"
+                    >
                         <core:Icon
                             src="{= ${meansOfTransport} === 'Flug' ? 'sap-icon://flight' : ${meansOfTransport} === 'Zug' ? 'sap-icon://bus-public-transport' : 'sap-icon://car-rental' }"
                         />
                         <m:Text text="{meansOfTransport}" />
                     </m:HBox>
+
                     <m:HBox columnGap="0.5rem">
                         <core:Icon src="sap-icon://home" />
                         <m:Text
@@ -111,17 +146,68 @@
                 </layout:VerticalLayout>
 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:HBox columnGap="0.5rem">
-                        <core:Icon src="sap-icon://map" />
-                        <m:Text text="{destination}" />
-                    </m:HBox>
+                    <m:Label
+                        text="Buchungsinformationen"
+                        class="sapUiTinyMarginBottom"
+                    />
                     <m:HBox
                         columnGap="0.5rem"
-                        visible="{= ${booking/bookingNumber} !== undefined }"
+                        class="sapUiTinyMarginBottom"
                     >
                         <core:Icon src="sap-icon://business-card" />
-                        <m:Text text="Buchung: {booking/bookingNumber}" />
+                        <m:Text text="Nr: {booking/bookingNumber}" />
                     </m:HBox>
+
+                    <m:HBox columnGap="0.5rem">
+                        <core:Icon src="sap-icon://status" />
+                        <m:ObjectStatus
+                            text="{booking/status/name}"
+                            state="{path: 'booking/status/name', formatter:'.formatStatusState'}"
+                        />
+                    </m:HBox>
+                </layout:VerticalLayout>
+
+                <layout:VerticalLayout
+                    class="sapUiSmallMarginBeginEnd"
+                    visible="{= %{meansOfTransport} === 'Flug' }"
+                >
+                    <m:Label
+                        text="Flugdetails"
+                        class="sapUiTinyMarginBottom"
+                    />
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Hinflug"
+                            class="sapUiTinyMarginBottom sapUiSmallText"
+                        />
+                        <m:HBox columnGap="0.5rem">
+                            <core:Icon src="sap-icon://flight" />
+                            <m:Text
+                                text="{flights/outboundFlightRoute/flightNumber}"
+                            />
+                        </m:HBox>
+                        <m:Text
+                            text="{flights/outboundFlightRoute/departureLocation/iata} → {flights/outboundFlightRoute/arrivalLocation/iata}"
+                            class="sapUiTinyText"
+                        />
+                    </m:VBox>
+
+                    <m:VBox>
+                        <m:Label
+                            text="Rückflug"
+                            class="sapUiTinyMarginBottom sapUiSmallText"
+                        />
+                        <m:HBox columnGap="0.5rem">
+                            <core:Icon src="sap-icon://flight" />
+                            <m:Text
+                                text="{flights/returnFlightRoute/flightNumber}"
+                            />
+                        </m:HBox>
+                        <m:Text
+                            text="{flights/returnFlightRoute/departureLocation/iata} → {flights/returnFlightRoute/arrivalLocation/iata}"
+                            class="sapUiTinyText"
+                        />
+                    </m:VBox>
                 </layout:VerticalLayout>
             </m:FlexBox>
         </headerContent>
@@ -220,7 +306,7 @@
                             />
                             <m:Input
                                 value="{path: 'destination'}"
-                                editable="{= ${editModel>/editMode} }"
+                                editable="{=%{meansOfTransport} !== 'Flug' ? ${editModel>/editMode} : false }"
                             />
                             <m:Label
                                 labelFor="meansOfTransportEdit"
@@ -248,13 +334,10 @@
                                 labelFor="hotelEdit"
                                 text="{i18n>emp.hotel}"
                             />
-                            <m:Switch
-                                state="{path: 'hotel'}"
-                                visible="{= ${editModel>/editMode} }"
-                            />
-                            <m:Text
-                                text="{path: 'hotel'}"
-                                visible="{= !${editModel>/editMode} }"
+                            <m:CheckBox
+                                selected="{path: 'hotel'}"
+                                editable="{= ${editModel>/editMode} }"
+                                text="{i18n>hotelNeeded}"
                             />
                         </form:content>
                     </form:SimpleForm>
@@ -279,6 +362,7 @@
                         <form:content>
                             <m:Label text="Route auswählen" />
                             <m:Select
+                                id="outboundRouteSelect"
                                 width="100%"
                                 forceSelection="true"
                                 selectedKey="{flights/outboundFlightRoute_ID}"
@@ -320,6 +404,7 @@
                         <form:content>
                             <m:Label text="Route auswählen" />
                             <m:Select
+                                id="returnRouteSelect"
                                 width="100%"
                                 forceSelection="true"
                                 selectedKey="{flights/returnFlightRoute_ID}"
@@ -366,7 +451,7 @@
                         <m:Label text="{i18n>bookingStatus}" />
                         <m:Select
                             selectedKey="{path: 'booking/status/name', formatter:'.formatStatusState'}"
-                            editable="{= ${editModel>/editMode} }"
+                            editable="false"
                         >
                             <core:Item
                                 key="Neu"

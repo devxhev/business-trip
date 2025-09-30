@@ -57,9 +57,7 @@ sap.ui.define(
         _toggleEdit: function (bEdit) {
           let oEditModel = this.getView().getModel("editModel");
           oEditModel.setProperty("/editMode", bEdit);
-          /* .then(() => {
-            if (bEdit) this._suspendResumeFlightSelects();
-          }); */
+          if (bEdit) this._suspendResumeFlightSelects();
         },
 
         formatFileSize: function (size) {
@@ -281,6 +279,66 @@ sap.ui.define(
             );
           }
         },
+        onSubmit: async function () {
+          const oView = this.getView();
+          const oCtx = oView.getBindingContext();
+          if (!oCtx) return;
+
+          try {
+            const draftCtx = this.getView().getBindingContext();
+            if (!draftCtx) {
+              sap.m.MessageToast.show(
+                "Draft-Context konnte nicht erstellt werden"
+              );
+              return;
+            }
+            switch (draftCtx.getObject().booking.status.name) {
+              case "Neu":
+                draftCtx.setProperty(
+                  "booking/status_ID",
+                  "550e8400-e29b-41d4-a716-446655440001"
+                );
+                break;
+              case "Bereit zur Bearbeitung":
+                draftCtx.setProperty(
+                  "booking/status_ID",
+                  "550e8400-e29b-41d4-a716-446655440002"
+                );
+                break;
+              case "In Bearbeitung":
+                draftCtx.setProperty(
+                  "booking/status_ID",
+                  "550e8400-e29b-41d4-a716-446655440003"
+                );
+                break;
+              case "Gebucht":
+                draftCtx.setProperty(
+                  "booking/status_ID",
+                  "550e8400-e29b-41d4-a716-446655440004"
+                );
+                break;
+              case "Abgeschlossen":
+                sap.m.MessageToast.show(
+                  "Die Buchung ist bereits abgeschlossen."
+                );
+                return;
+              case "Storniert":
+                sap.m.MessageToast.show(
+                  "Die Buchung wurde storniert und kann nicht weiter bearbeitet werden."
+                );
+                return;
+              default:
+                sap.m.MessageToast.show(
+                  "Unbekannter Status. Einreichen nicht möglich."
+                );
+                return;
+            }
+            await this.editFlow.saveDocument(draftCtx);
+          } catch (e) {
+            console.error("Submit failed:", e);
+            sap.m.MessageBox.error(e.message || "Fehler beim Einreichen");
+          }
+        },
 
         formatSwitchState: function (sValue) {
           return sValue === "X";
@@ -333,8 +391,7 @@ sap.ui.define(
             let draftCtx = ctx;
 
             if (obj && obj.IsActiveEntity) {
-              await this.editFlow.editDocument(ctx);
-              draftCtx = this.getView().getBindingContext();
+              draftCtx = await this.editFlow.editDocument(ctx);
             }
 
             if (!draftCtx) {
@@ -394,6 +451,71 @@ sap.ui.define(
             console.error("Upload preparation failed:", e);
             sap.m.MessageToast.show("Fehler beim Vorbereiten des Uploads");
           }
+        },
+
+        // Bei Änderung der Outbound-Auswahl: Destination automatisch setzen
+        onOutboundRouteChange: function (oEvent) {
+          const oItem = oEvent.getParameter("selectedItem");
+          if (!oItem) return;
+
+          const oCtx = oItem.getBindingContext();
+          if (!oCtx) return;
+
+          const oObj = oCtx.getObject && oCtx.getObject();
+          const city =
+            oObj && oObj.arrivalLocation && oObj.arrivalLocation.city;
+
+          if (!city) return;
+
+          const btCtx = this.getView().getBindingContext();
+          if (btCtx) {
+            btCtx.setProperty("destination", city);
+            sap.m.MessageToast.show(`Ziel automatisch auf "${city}" gesetzt`);
+          }
+        },
+
+        // Return-Handler (optional, falls du auch bei Rückflug die Destination setzen willst)
+        onReturnFlightCriteriaChange: function () {
+          // Hier könntest du auch Logic hinzufügen
+        },
+
+        // Transportmittel wechseln: Flight-Selects aktivieren/deaktivieren
+        onMeansOfTransportChange: function () {
+          this._suspendResumeFlightSelects();
+        },
+
+        _suspendResumeFlightSelects: function () {
+          const ctx = this.getView().getBindingContext();
+          if (!ctx) return;
+
+          const mot = ctx.getProperty("meansOfTransport");
+          const isFlight = mot === "Flug";
+
+          // Flight-Route Selects finden (falls im Edit-Modus)
+          const obSel = this.getView().byId("outboundRouteSelect");
+          const retSel = this.getView().byId("returnRouteSelect");
+
+          [obSel, retSel].forEach((sel) => {
+            if (!sel) return;
+            const b = sel.getBinding("items");
+            if (!b) return;
+
+            try {
+              if (isFlight) {
+                // Nur resumieren wenn suspended
+                if (b.isSuspended()) {
+                  b.resume();
+                }
+              } else {
+                // Nur suspendieren wenn nicht suspended
+                if (!b.isSuspended()) {
+                  b.suspend();
+                }
+              }
+            } catch (e) {
+              console.warn("Binding suspend/resume failed:", e);
+            }
+          });
         },
       }
     );
